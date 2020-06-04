@@ -14,7 +14,7 @@
     endfunction
 
     " neovim pyenv executable
-    let g:python3_host_prog = expand("$HOME/.pyenv/versions/neovim3/bin/python")
+    let g:python3_host_prog = expand("$HOME/.virtualenvs/neovim/bin/python")
   " }
 
   " Basics {

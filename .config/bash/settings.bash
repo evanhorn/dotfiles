@@ -3,6 +3,16 @@ HISTSIZE=100000
 HISTFILE="$HOME/.config/bash/bash_history"
 SAVEHIST=$HISTSIZE
 
+# virtualenv and virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source ~/.local/bin/virtualenvwrapper.sh
+
+# set vimconfig directory and add fzf to path
+export VIMCONFIG=$HOME/.config/nvim
+export PATH=$PATH:$VIMCONFIG/pack/minpac/start/fzf/bin
+
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend;
 
@@ -22,3 +32,4 @@ done;
 # set -o noclobber
 export LS_OPTIONS='-F -N --color=auto -T 0'
 export EDITOR=/usr/bin/vi
+export PYTHONBREAKPOINT=pudb.set_trace
