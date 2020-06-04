@@ -65,6 +65,9 @@ done
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
 
+# Toggle R Graphics window always on top
+alias rtoggle='wmctrl -r "R Graphics" -b toggle,above'
+
 # tmux aliases
 alias t="tmux"
 alias ta="t a -t"

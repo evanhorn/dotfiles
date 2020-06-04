@@ -3,7 +3,7 @@
 set background=dark         " Assume a dark background
 
 let mapleader = ','
-let maplocalleader = '_'
+let maplocalleader = ';'
 
 filetype plugin indent on   " Automatically detect file types.
 
