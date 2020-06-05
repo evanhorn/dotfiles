@@ -28,3 +28,7 @@ there="$HOME/.shell.here"
 there() {
     cd "$(readlink "${there}")"
 }
+
+gpip() {
+    PIP_REQUIRE_VIRTUALENV=FALSE pip "$@"
+}
