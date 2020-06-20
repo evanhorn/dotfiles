@@ -1,5 +1,5 @@
 # dircolors
-if [[ "$(tput colors)" == "256" ]]; then
+if [[ -t 1 && "$(tput colors)" == "256" ]]; then
     # eval "$(dircolors $HOME/.config/shell/plugins/dircolors-solarized/dircolors.256dark)"
     eval "$(dircolors $HOME/.config/shell/plugins/dircolors-solarized/dircolors.ansi-universal)"
 fi
