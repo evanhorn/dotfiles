@@ -367,6 +367,21 @@
 
 " Writing {
 
+  " vimtex {
+    let g:vimtex_view_method = 'zathura'
+    let g:tex_flavor = 'latex'
+    " TOC settings
+    let g:vimtex_toc_config = {
+          \ 'name' : 'TOC',
+          \ 'layers' : ['content', 'todo', 'include'],
+          \ 'resize' : 1,
+          \ 'split_width' : 50,
+          \ 'todo_sorted' : 0,
+          \ 'show_help' : 1,
+          \ 'show_numbers' : 1,
+          \ 'mode' : 2,
+          \}
+
   let g:pymode_lint_checkers = ['pyflakes']
   let g:pymode_trim_whitespaces = 0
   let g:pymode_options = 0
