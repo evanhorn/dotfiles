@@ -13,7 +13,7 @@
       return  (has('win32') || has('win64'))
     endfunction
 
-    " neovim pyenv executable
+    " neovim virtualenv executable
     let g:python3_host_prog = expand("$HOME/.virtualenvs/neovim/bin/python")
   " }
 
@@ -32,6 +32,9 @@
       inoremap <silent> <C-[>OC <RIGHT>
     endif
   " }
+
+  let g:tex_flavor = 'latex'
+
 " }
 
 " Setup minpac support {
@@ -66,10 +69,12 @@ if filereadable(expand("$HOME/.vimrc_before"))
   source $HOME/.vimrc_before
 endif
 
+
 source $HOME/.config/nvim/basic-settings.vim
 source $HOME/.config/nvim/navigation-mappings.vim
 source $HOME/.config/nvim/editing-mappings.vim
 source $HOME/.config/nvim/ex-commands.vim
+packloadall
 source $HOME/.config/nvim/plugin-config.vim
 source $HOME/.config/nvim/autocommands.vim
 source $HOME/.config/nvim/completion.vim
