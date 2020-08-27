@@ -93,20 +93,3 @@ let test#strategy = "dispatch"
     "set term=builtin_ansi       " Make arrow and other keys work
   endif
 " }
-
-" " set up cpp syntax highlighting for NPSS files
-" autocmd! FileType mdl,run,case,map,fnc,cmp,int set syntax=cpp
-
-" iabbrev @@ ericmvanhorn7@gmail.com
-" iabbrev ccopy Copyright 2017 Eric Van Horn, all rights reserved
-" inoremap ssig --<CR>Eric Van Horn<CR>ericmvanhorn7@gmail.com
-
-" SnipMate {
-  " Setting the author var
-  let g:snips_author = 'Eric Van Horn <ericmvanhorn7@gmail.com>'
-" }
-
-" Simpler window switching {
-  nnoremap <leader>w <C-W>w
-  nnoremap <leader>W <C-W>W
-" }
