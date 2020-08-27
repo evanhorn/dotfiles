@@ -210,13 +210,20 @@
 " Completion {
 
   " deoplete {
-    " Use deoplete
+    " Use deoplete - set before initializing deoplete
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#auto_complete = 1
 
     " show docstring in preview window
     let g:deoplete#sources#jedi#show_docstring = 1
 
+    " Add deoplete before function calls
+    packadd deoplete.nvim
+    call deoplete#custom#source('ultisnips', 'rank', 1000)
+    call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+
+    " Add vimtex before using variable
+    packadd vimtex
     call deoplete#custom#var('omni', 'input_patterns', {
       \ 'tex': g:vimtex#re#deoplete,
       \})

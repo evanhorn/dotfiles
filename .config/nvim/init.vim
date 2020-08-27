@@ -69,12 +69,10 @@ if filereadable(expand("$HOME/.vimrc_before"))
   source $HOME/.vimrc_before
 endif
 
-
 source $HOME/.config/nvim/basic-settings.vim
 source $HOME/.config/nvim/navigation-mappings.vim
 source $HOME/.config/nvim/editing-mappings.vim
 source $HOME/.config/nvim/ex-commands.vim
-packloadall
 source $HOME/.config/nvim/plugin-config.vim
 source $HOME/.config/nvim/autocommands.vim
 source $HOME/.config/nvim/completion.vim

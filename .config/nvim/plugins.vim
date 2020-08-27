@@ -94,7 +94,7 @@
 
 " Snippets & AutoComplete {
   " Engines {
-    call minpac#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
+    call minpac#add('Shougo/deoplete.nvim', {'type': 'opt', 'do': ':UpdateRemotePlugins'})
     call minpac#add('Shougo/echodoc.vim')
     call minpac#add('SirVer/ultisnips')
   " }
@@ -135,7 +135,7 @@
 " }
 
 " LaTeX {
-  call minpac#add('lervag/vimtex')
+  call minpac#add('lervag/vimtex', {'type': 'opt'})
   call minpac#add('KeitaNakamura/tex-conceal.vim')
   call minpac#add('xuhdev/vim-latex-live-preview')
 " }
