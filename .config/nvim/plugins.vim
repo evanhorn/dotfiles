@@ -53,7 +53,7 @@
 
 " Files and fuzzy search {
   call minpac#add('tpope/vim-vinegar')
-  call minpac#add('junegunn/fzf')
+  call minpac#add('junegunn/fzf', {'do': {-> system('./install --xdg --bin')}})
   call minpac#add('junegunn/fzf.vim')
 " }
 

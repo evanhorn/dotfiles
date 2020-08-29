@@ -9,9 +9,11 @@ export PROJECT_HOME=$HOME/Devel
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 source ~/.local/bin/virtualenvwrapper.sh
 
-# set vimconfig directory and add fzf to path
+# add fzf to path
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+
+# set vimconfig directory
 export VIMCONFIG=$HOME/.config/nvim
-export PATH=$PATH:$VIMCONFIG/pack/minpac/start/fzf/bin
 
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend;
