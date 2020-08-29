@@ -101,6 +101,28 @@ set iskeyword-=.                    " '.' is an end of word designator
 set iskeyword-=#                    " '#' is an end of word designator
 set iskeyword-=-                    " '-' is an end of word designator
 
+" Yank from the cursor to the end of the line, to be consistent with C and D.
+nnoremap Y y$
+
+inoremap jk <ESC>
+
+" Neovim terminal escape mapping {
+  if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+    tnoremap jk <C-\><C-n>
+    tnoremap <C-v><Esc> <Esc>
+
+    highlight! link TermCursor Cursor
+    highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+
+    if executable('nvr')
+      let $VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+    endif
+  endif
+" }
+
+nnoremap <C-p> :<C-u>FZF<CR>
+
 " Statusline {
   if has('statusline')
     set laststatus=2
@@ -122,14 +144,3 @@ let g:skipview_files = [
     \ ]
 
 scriptencoding utf-8
-
-" For JavaScript files, use `eslint` (and only eslint)
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\ }
-
-" Mappings in the style of unimpaired-next
-nmap <silent> [W <Plug>(ale_first)
-nmap <silent> [w <Plug>(ale_previous)
-nmap <silent> ]w <Plug>(ale_next)
-nmap <silent> ]W <Plug>(ale_last)

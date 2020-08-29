@@ -120,27 +120,9 @@
     let g:undotree_SetFocusWhenToggle=1
   " }
 
-  " tabularize {
+  " tabular {
 
-    if exists(":Tabularize")
-      nmap <Leader>a& :Tabularize /&<CR>
-      vmap <Leader>a& :Tabularize /&<CR>
-      nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-      vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-      nmap <Leader>a=> :Tabularize /=><CR>
-      vmap <Leader>a=> :Tabularize /=><CR>
-      nmap <Leader>a: :Tabularize /:<CR>
-      vmap <Leader>a: :Tabularize /:<CR>
-      nmap <Leader>a:: :Tabularize /:\zs<CR>
-      vmap <Leader>a:: :Tabularize /:\zs<CR>
-      nmap <Leader>a, :Tabularize /,<CR>
-      vmap <Leader>a, :Tabularize /,<CR>
-      nmap <Leader>a,, :Tabularize /,\zs<CR>
-      vmap <Leader>a,, :Tabularize /,\zs<CR>
-      nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-      vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    endif
-
+    " Tabular align {
     function! s:align()
       let p = '^\s*|\s.*\s|\s*$'
       if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
@@ -154,6 +136,30 @@
 
     " Creates auto aligning tabular environment
     inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+    " }
+
+    if exists(":Tabularize") || isdirectory(expand("$HOME/.config/nvim/pack/*/start/tabular/"))
+      nmap <Leader>a& :Tabularize /&<CR>
+      vmap <Leader>a& :Tabularize /&<CR>
+      nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+      vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+      " nmap <Leader>a= :Tabularize /=<CR>
+      " vmap <Leader>a= :Tabularize /=<CR>
+      nmap <Leader>a=> :Tabularize /=><CR>
+      vmap <Leader>a=> :Tabularize /=><CR>
+      nmap <Leader>a: :Tabularize /:<CR>
+      vmap <Leader>a: :Tabularize /:<CR>
+      " nmap <Leader>a: :Tabularize /:\zs<CR>
+      " vmap <Leader>a: :Tabularize /:\zs<CR>
+      nmap <Leader>a:: :Tabularize /:\zs<CR>
+      vmap <Leader>a:: :Tabularize /:\zs<CR>
+      nmap <Leader>a, :Tabularize /,<CR>
+      vmap <Leader>a, :Tabularize /,<CR>
+      nmap <Leader>a,, :Tabularize /,\zs<CR>
+      vmap <Leader>a,, :Tabularize /,\zs<CR>
+      nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+      vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    endif
   " }
 
   " vim-multiple-cursors {
@@ -165,6 +171,20 @@
       call deoplete#custom#buffer_option('auto_complete', v:true)
     endfunction
   " }
+
+" }
+
+" ale {
+  " For JavaScript files, use `eslint` (and only eslint)
+  let g:ale_linters = {
+  \   'javascript': ['eslint'],
+  \ }
+
+  " Mappings in the style of unimpaired-next
+  nmap <silent> [W <Plug>(ale_first)
+  nmap <silent> [w <Plug>(ale_previous)
+  nmap <silent> ]w <Plug>(ale_next)
+  nmap <silent> ]W <Plug>(ale_last)
 
 " }
 
@@ -207,6 +227,26 @@
     " }
 " }
 
+" Grepper {
+
+" Search for the current word
+  nnoremap <Leader>* :Grepper -cword -noprompt<CR>
+
+" Search for the current selection
+  nmap gs <plug>(GrepperOperator)
+  xmap gs <plug>(GrepperOperator)
+
+  call SetupCommandAlias("ack", "GrepperAck")
+  call SetupCommandAlias("grep", "GrepperGrep")
+  call SetupCommandAlias("git", "GrepperGit")
+  call SetupCommandAlias("rg", "GrepperRg")
+
+" Open Grepper-prompt for a particular grep-alike tool
+  nnoremap <Leader>g :Grepper -tool ack<CR>
+  nnoremap <Leader>G :Grepper -tool git<CR>
+
+" }
+
 " Completion {
 
   " deoplete {
@@ -229,6 +269,7 @@
       \})
 
     call deoplete#custom#option('smart_case', v:true)
+
     " call deoplete#custom#option({
     "   \ 'auto_complete_delay': 200,
     "   \ 'smart_case': v:true,
@@ -248,11 +289,12 @@
   " }
 
   " UltiSnips {
-    " let g:UltiSnipsDir = '"$HOME/.config/nvim/pack/minpac/vim-snippets/UltiSnips"'
-    " let g:UltiSnipsSnippetsDir = '"$HOME/.config/nvim/pack/minpac/vim-snippets/UltiSnips"'
-    " let g:UltiSnipsEditSplit = 'vertical'
-    let g:UltiSnipsEditSplit = 'horizontal'
-    let g:ultisnips_python_quoting_style = 'double'
+    " let g:UltiSnipsExpandTrigger="<tab>"
+    " let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+    " let g:UltiSnipsEditSplit = 'horizontal'
+    " let g:ultisnips_python_quoting_style = 'double'
   " }
 
   " echodoc {
@@ -261,29 +303,6 @@
     let g:echodoc#type = 'virtual'
   " }
 
-  " OmniComplete {
-    if has("autocmd") && exists("+omnifunc")
-      autocmd Filetype *
-        \ if &omnifunc == "" |
-        \   setlocal omnifunc=syntaxcomplete#Complete |
-        \ endif
-    endif
-
-    hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
-    hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-    hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
-
-    " Some convenient mappings
-    "inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
-    inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-    inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-    inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
-    inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
-
-    " Automatically open and close the popup menu / preview window
-    au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-    set completeopt=menu,preview,longest
-  " }
 
 " }
 

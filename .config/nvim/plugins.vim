@@ -5,7 +5,7 @@
   call minpac#add('tpope/vim-surround')
   call minpac#add('tpope/vim-repeat')
   call minpac#add('jiangmiao/auto-pairs')
-  call minpac#add('terryma/vim-multiple-cursors')
+  call minpac#add('terryma/vim-multiple-cursors', {'type': 'opt'})
   call minpac#add('vim-scripts/sessionman.vim')
   call minpac#add('tpope/vim-obsession')
   call minpac#add('tpope/vim-scriptease', {'type': 'opt'})
