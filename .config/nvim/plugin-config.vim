@@ -216,7 +216,6 @@
     let g:vimtex_toc_config = {
           \ 'name' : 'TOC',
           \ 'layers' : ['content', 'todo', 'include'],
-          \ 'resize' : 1,
           \ 'split_width' : 50,
           \ 'todo_sorted' : 0,
           \ 'show_help' : 1,
