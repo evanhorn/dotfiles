@@ -31,6 +31,10 @@ source $HOME/.config/bash/prompt.bash
 # Plugins
 source $HOME/.config/bash/plugins.bash
 
+# Use bash-completion, if available
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+    . /usr/share/bash-completion/bash_completion
+
 # Allow local customizations in the $HOME/.shell_local_after file
 if [ -f $HOME/.shell_local_after ]; then
     source $HOME/.shell_local_after
