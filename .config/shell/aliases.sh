@@ -73,7 +73,7 @@ alias t="tmux"
 alias ta="t a -t"
 alias tls="t ls"
 alias tn="t new -s"
-alias reboot-required='if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi'
+alias restart-required='if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi'
 
 if [ -f $HOME/.alias_local ]; then
     source $HOME/.alias_local
