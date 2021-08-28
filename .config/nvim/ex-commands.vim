@@ -103,6 +103,7 @@
   let s:is_transparent = 0
   function! ToggleTransparent()
     if s:is_transparent == 0
+      set background=dark
       hi Normal guibg=NONE ctermbg=NONE
       let s:is_transparent = 1
     else
@@ -116,8 +117,8 @@
     endif
   endfunction
 
-  noremap <leader>bg :call ToggleBG()<CR>
-  noremap <leader>tr :call ToggleTransparent()<CR>
+  noremap <localleader>bg :call ToggleBG()<CR>
+  noremap <localleader>tr :call ToggleTransparent()<CR>
 " }
 
 " Expand alias in Ex Mode {
