@@ -112,6 +112,7 @@
   endif
 " }
 
+
 " Editing Tools {
 
   " undotree {
@@ -202,7 +203,22 @@
 
 " TagBar {
   if isdirectory(expand("$HOME/.config/nvim/pack/*/start/tagbar/"))
-    nnoremap <silent> <leader>tt :TagbarToggle<CR>
+    nnoremap <silent> <leader>tb :TagbarToggle<CR>
+
+    " Open Tagbar automatically on Vim startup
+    " autocmd VimEnter * nested :TagbarOpen
+
+    " Open Tagbar only if Vim started with supported file/files
+    " autocmd VimEnter * nested :call tagbar#autoopen(1)
+
+    " Open Tagbar when opening supported file
+    autocmd FileType * nested :call tagbar#autoopen(0)
+
+    " Open Tagbar in the current tab when switching to loaded supported buffer
+    " autocmd BufEnter * nested :call tagbar#autoopen(0)
+
+    " Open Tagbar only for specific filetypes
+    " autocmd FileType c,cpp nested :TagbarOpen
   endif
 " }
 

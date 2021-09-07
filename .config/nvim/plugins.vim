@@ -69,7 +69,7 @@
   call minpac#add('godlygeek/tabular')
   if executable('ctags')
     call minpac#add('ludovicchabant/vim-gutentags')
-    call minpac#add('preservim/tagbar', {'type': 'opt'})
+    call minpac#add('preservim/tagbar')
   endif
   call minpac#add('tpope/vim-projectionist', {'type': 'opt'})
   call minpac#add('mattn/gist-vim', {'type': 'opt'})
