@@ -36,7 +36,7 @@
 
   " Colorschemes {
     call minpac#add('iCyMind/NeoSolarized')
-    call minpac#add('joshdick/onedark.vim' , {'type': 'opt'})
+    call minpac#add('joshdick/onedark.vim' , { 'branch': 'main', 'type': 'opt'})
     call minpac#add('mhartington/oceanic-next' , {'type': 'opt'})
     call minpac#add('sickill/vim-monokai' , {'type': 'opt'})
     call minpac#add('fenetikm/falcon' , {'type': 'opt'})
@@ -69,7 +69,7 @@
   call minpac#add('godlygeek/tabular')
   if executable('ctags')
     call minpac#add('ludovicchabant/vim-gutentags')
-    call minpac#add('majutsushi/tagbar', {'type': 'opt'})
+    call minpac#add('preservim/tagbar', {'type': 'opt'})
   endif
   call minpac#add('tpope/vim-projectionist', {'type': 'opt'})
   call minpac#add('mattn/gist-vim', {'type': 'opt'})
@@ -102,7 +102,7 @@
   " Snippets {
     call minpac#add('honza/vim-snippets')
     call minpac#add('deoplete-plugins/deoplete-tag', {'type': 'opt'})
-    call minpac#add('Shougo/deoppet.nvim', {'type': 'opt'})
+    call minpac#add('Shougo/deoppet.nvim', {'type': 'opt', 'do': ':UpdateRemotePlugins'})
 
 
     " Language-specific completers {
