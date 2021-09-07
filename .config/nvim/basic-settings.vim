@@ -57,9 +57,7 @@ set wildmode=list:longest,full  " Command <Tab> completion, list matches, then l
 
 " Setting up the directories {
   set backup                  " Backups are nice ...
-  set backupdir=$HOME/.config/nvim/backup/
-  set viewdir=$HOME/.config/nvim/views/
-  set directory=$HOME/.config/nvim/swap/
+  set backupdir=$HOME/.local/share/nvim/backup/
   if has('persistent_undo')
     set undolevels=1000         " Maximum number of changes that can be undone
     set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
