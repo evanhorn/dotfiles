@@ -90,13 +90,8 @@
    " text output by commands like `ls` aren't what you expect, you might want to
    " try disabling this option. Default value:
    let g:neosolarized_termBoldAsBright = 1
-   color NeoSolarized             " Load a colorscheme
- " }
 
- " Solarized {
    set termguicolors
-   let &t_8f = "[38;2;%lu;%lu;%lum"
-   let &t_8b = "[48;2;%lu;%lu;%lum"
    color NeoSolarized             " Load a colorscheme
  " }
 

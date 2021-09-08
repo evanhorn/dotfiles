@@ -36,10 +36,9 @@
 
   " Colorschemes {
     call minpac#add('iCyMind/NeoSolarized')
-    call minpac#add('joshdick/onedark.vim' , { 'branch': 'main', 'type': 'opt'})
-    call minpac#add('mhartington/oceanic-next' , {'type': 'opt'})
-    call minpac#add('sickill/vim-monokai' , {'type': 'opt'})
-    call minpac#add('fenetikm/falcon' , {'type': 'opt'})
+    call minpac#add('joshdick/onedark.vim')
+    call minpac#add('sickill/vim-monokai')
+    call minpac#add('fenetikm/falcon')
   " }
 
   " Syntax {
