@@ -1,4 +1,6 @@
-" vim: set sw=2 ts=2 sts=2 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
+
+scriptencoding utf-8
 
 set background=dark         " Assume a dark background
 
@@ -8,12 +10,27 @@ let maplocalleader = ';'
 filetype plugin indent on   " Automatically detect file types.
 
 syntax on                   " Syntax highlighting
-set autoindent                  " Indent at the same level of the previous line
+set autoindent              " Indent at the same level of the previous line
+
+set cmdheight=2             " Give more space for displaying messages.
+
+" Having longer update time (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=100
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
 if has('clipboard')
-  if has('unnamedplus')  " When possible use + register for copy-paste
+  if has('unnamedplus')     " When possible use + register for copy-paste
       set clipboard=unnamed,unnamedplus
-  else         " On mac and Windows, use * register for copy-paste
+  else                      " On mac and Windows, use * register for copy-paste
       set clipboard=unnamed
   endif
 endif
@@ -30,7 +47,7 @@ set wildmode=list:longest,full  " Command <Tab> completion, list matches, then l
   set ignorecase                  " Case insensitive search
   set smartcase                   " Case sensitive when uc present
   set number                      " Line numbers on
-  set ruler                   " Show the ruler
+  set ruler                       " Show the ruler
   set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
   set incsearch                   " Find as you type search
   set hlsearch                    " Highlight search terms
@@ -46,13 +63,8 @@ set wildmode=list:longest,full  " Command <Tab> completion, list matches, then l
 "}
 
 " Global tabs/spaces {
-  set tabstop=4                   " An indentation every four columns
-  set shiftwidth=4                " Use indents of 4 spaces
-  set softtabstop=4               " Let backspace delete indent
-  set expandtab                   " Tabs are spaces, not tabs
   set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
   set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
-  " set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 " }
 
 " Setting up the directories {
@@ -62,9 +74,6 @@ set wildmode=list:longest,full  " Command <Tab> completion, list matches, then l
     set undolevels=1000         " Maximum number of changes that can be undone
     set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
     set undofile
-    if !has('nvim')
-      set undodir=$HOME/.config/nvim/undo/
-    endif
     augroup vimrc
       autocmd!
       autocmd BufWritePre /tmp/* setlocal noundofile
@@ -83,6 +92,8 @@ set cursorline                  " Highlight current line
 highlight clear SignColumn      " SignColumn should match background
 highlight clear LineNr          " Current line number row will have same background color in relative mode
 " highlight clear CursorLineNr    " Remove highlight color from current line number
+"
+set termguicolors
 
 set linespace=0                 " No extra spaces between rows
 set showmatch                   " Show matching brackets/parenthesis
@@ -90,7 +101,7 @@ set winminheight=0              " Windows can be 0 line high
 
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 
-set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
+set shortmess+=filmnrxoOtTc         " Abbrev. of messages (avoids 'hit enter')
 set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
 set virtualedit=onemore             " Allow for cursor beyond last character
 set history=1000                    " Store a ton of history (default is 20)
@@ -99,46 +110,7 @@ set iskeyword-=.                    " '.' is an end of word designator
 set iskeyword-=#                    " '#' is an end of word designator
 set iskeyword-=-                    " '-' is an end of word designator
 
-" Yank from the cursor to the end of the line, to be consistent with C and D.
-nnoremap Y y$
+set conceallevel=2
 
-inoremap jk <ESC>
+let g:tex_flavor = 'latex'
 
-" Neovim terminal escape mapping {
-  if has('nvim')
-    tnoremap <Esc> <C-\><C-n>
-    tnoremap jk <C-\><C-n>
-    tnoremap <C-v><Esc> <Esc>
-
-    highlight! link TermCursor Cursor
-    highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
-
-    if executable('nvr')
-      let $VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-    endif
-  endif
-" }
-
-nnoremap <C-p> :<C-u>FZF<CR>
-
-" Statusline {
-  if has('statusline')
-    set laststatus=2
-
-    " Broken down into easily includeable segments
-    set statusline=%<%f\                     " Filename
-    set statusline+=%w%h%m%r                 " Options
-    set statusline+=%{fugitive#statusline()} " Git Hotness
-    set statusline+=\ [%{&ff}/%Y]            " Filetype
-    set statusline+=\ [%{getcwd()}]          " Current dir
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-  endif
-" }
-
-" Add exclusions to mkview and loadview
-" eg: *.*, svn-commit.tmp
-let g:skipview_files = [
-    \ '\[example pattern\]'
-    \ ]
-
-scriptencoding utf-8

@@ -1,0 +1,16 @@
+:CocInstall coc-jedi
+:CocInstall coc-pyright
+:CocInstall coc-pydocstring
+:CocInstall coc-r-lsp
+:CocInstall coc-sh
+:CocInstall coc-vimlsp
+:CocInstall coc-json
+:CocInstall coc-yaml
+:CocInstall coc-ultisnips
+:CocInstall coc-css
+:CocInstall coc-html
+:CocInstall coc-vimtex
+:CocInstall coc-texlab
+:CocInstall coc-marketplace
+:CocInstall coc-html-css-support
+:CocInstall coc-pairs

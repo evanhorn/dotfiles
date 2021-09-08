@@ -1,4 +1,4 @@
-" vim: set sw=2 ts=2 sts=2 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
 " Relative wrap motion {
   " End/Start of line motion keys act relative to row/wrap width in the
@@ -18,11 +18,11 @@
   endfunction
 
   " Map g* keys in Normal, Operator-pending, and Visual+select
-  noremap $ :call WrapRelativeMotion("$")<CR>
-  noremap <End> :call WrapRelativeMotion("$")<CR>
-  noremap 0 :call WrapRelativeMotion("0")<CR>
-  noremap <Home> :call WrapRelativeMotion("0")<CR>
-  noremap ^ :call WrapRelativeMotion("^")<CR>
+  noremap $ <cmd>call WrapRelativeMotion("$")<CR>
+  noremap <End> <cmd>call WrapRelativeMotion("$")<CR>
+  noremap 0 <cmd>call WrapRelativeMotion("0")<CR>
+  noremap <Home> <cmd>call WrapRelativeMotion("0")<CR>
+  noremap ^ <cmd>call WrapRelativeMotion("^")<CR>
   " Overwrite the operator pending $/<End> mappings from above
   " to force inclusive motion with :execute normal!
   onoremap $ v:call WrapRelativeMotion("$")<CR>
@@ -51,20 +51,6 @@
   cmap Tabe tabe
 " }
 
-" Strip whitespace {
-  function! StripTrailingWhitespace()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " do the business:
-    %s/\s\+$//e
-    " clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
-  endfunction
-" }
-
 " Shell command {
   function! s:RunShellCommand(cmdline)
     botright new
@@ -88,7 +74,7 @@
 " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
 " }
 
-" Allow to trigger background {
+" Toggle background {
   function! ToggleBG()
     let s:is_transparent = 0
     let s:tbg = &background
@@ -101,6 +87,7 @@
   endfunction
 
   let s:is_transparent = 0
+
   function! ToggleTransparent()
     if s:is_transparent == 0
       set background=dark
@@ -117,8 +104,8 @@
     endif
   endfunction
 
-  noremap <localleader>bg :call ToggleBG()<CR>
-  noremap <localleader>tr :call ToggleTransparent()<CR>
+  noremap <localleader>bg <cmd>call ToggleBG()<CR>
+  noremap <localleader>tr <cmd>call ToggleTransparent()<CR>
 " }
 
 " Expand alias in Ex Mode {
@@ -128,3 +115,22 @@
           \ .'? ("'.a:output.'") : ("'.a:input.'"))'
   endfunction
 " }
+
+" Run macro in parallel over selected range (from Practical VIM, Tip 30) {
+  xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+  function! ExecuteMacroOverVisualRange()
+    echo "@".getcmdline()
+    execute ":'<,'>normal @".nr2char(getchar())
+  endfunction"
+" }
+
+" Instead of reverting the cursor to the last position in the buffer, we
+" set it to the first line when editing a git commit message
+au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+augroup filetypedetect
+  au! BufRead,BufNewFile *.geo setfiletype gmsh
+  au! BufRead,BufNewFile *.pro setfiletype getdp
+augroup END
+
