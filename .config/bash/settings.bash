@@ -6,8 +6,8 @@ SAVEHIST=$HISTSIZE
 # virtualenv and virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-source ~/.local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_PYTHON=$HOME/.local/pipx/venvs/virtualenvwrapper/bin/python3
+source $HOME/.local/bin/virtualenvwrapper.sh
 
 # add fzf to path
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
@@ -35,3 +35,4 @@ done;
 export LS_OPTIONS='-F -N --color=auto -T 0'
 export EDITOR=/usr/bin/vi
 export PYTHONBREAKPOINT=pudb.set_trace
+export BAT_THEME='Solarized (dark)'
