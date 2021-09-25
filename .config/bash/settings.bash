@@ -35,4 +35,3 @@ done;
 export LS_OPTIONS='-F -N --color=auto -T 0'
 export EDITOR=/usr/bin/vi
 export PYTHONBREAKPOINT=pudb.set_trace
-export BAT_THEME='Solarized (dark)'
