@@ -116,6 +116,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 " Writing {
   Plug 'glidenote/memolist.vim'
   Plug 'jdelkins/vim-correction'
+  Plug 'rhysd/vim-grammarous'
 " }
 
 call plug#end()
