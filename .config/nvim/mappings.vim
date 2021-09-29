@@ -115,5 +115,3 @@ inoremap jk <ESC>
   endif
 " }
 
-nnoremap <C-p> :<C-u>FZF<CR>
-
