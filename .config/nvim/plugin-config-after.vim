@@ -364,9 +364,12 @@ endif
   let g:ale_disable_lsp = 1
 
   let g:ale_linters = {
-  \   'python': ['jedils', 'flake8', 'mypy', 'pylint', 'pyright'],
-  \   'sh': ['language_server'],
-  \ }
+        \   'python': ['jedils', 'flake8', 'mypy', 'pylint', 'pyright'],
+        \ }
+
+  let g:ale_linters_ignore = {
+        \ 'tex': ['redpen']
+        \ }
 
   " Mappings in the style of unimpaired-next
   nmap <silent> [W <Plug>(ale_first)
@@ -402,6 +405,9 @@ endif
     let g:vimtex_view_method = 'zathura'
     let g:vimtex_fold_enabled = 1
     let g:vimtex_quickfix_mode = 0
+    let g:vimtex_grammar_textidote = {
+          \ 'jar': '/opt/textidote/textidote.jar',
+          \ }
 
     " TOC settings
     let g:vimtex_toc_config = {
