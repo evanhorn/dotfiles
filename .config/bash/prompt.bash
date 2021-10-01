@@ -5,5 +5,5 @@ if [ -f $HOME/.local/bin/powerline-daemon ]; then
   POWERLINE_BASH_SELECT=1
 
   export POWERLINE_COMMAND=$HOME/.local/bin/powerline
-  source "$HOME/.local/pipx/venvs/powerline-status/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh"
+  source "`python -m site --user-site`/powerline/bindings/bash/powerline.sh"
 fi
