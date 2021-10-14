@@ -30,6 +30,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'kshenoy/vim-signature'
   Plug 'MattesGroeger/vim-bookmarks'
   Plug 'tyru/open-browser.vim'
+  Plug 'tpope/vim-obsession'
 
   " Colorschemes {
     Plug 'iCyMind/NeoSolarized'
