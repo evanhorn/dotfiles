@@ -76,7 +76,7 @@ alias tn="t new -s"
 alias restart-required='if [ -f /var/run/reboot-required ]; then cat /var/run/reboot-required; fi'
 
 # Git config alias
-alias config="git --git-dir=$HOME/.cfg --work-tree=$HOME"
+alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
 if [ -f $HOME/.alias_local ]; then
     source $HOME/.alias_local

@@ -1,0 +1,11 @@
+# clone into temporary dotfile directory
+git clone --separate-git-dir $HOME/.dotfiles https://github.com/evanhorn/dotfiles.git $HOME/tmp/dotfiles
+
+# sync from temporary folder into home directory, backup overwritten files to .config-backup
+rsync --recursive --verbose --exclude '.git' --backup-dir=$HOME/.config-backup $HOME/tmp/dotfiles/ $HOME/
+
+# remove temporary dotfile directory
+rm -rf $HOME/tmp/dotfiles
+
+# Prevent showing untracked files
+git --git-dir=$HOME/.dotfiles/ config status.showUntrackedFiles no
