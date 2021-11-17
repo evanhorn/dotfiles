@@ -27,6 +27,11 @@ else
   set signcolumn=yes
 endif
 
+" Live preview of buffer after some command (i.e. replace)
+if has("nvim")
+  set inccommand=nosplit
+endif
+
 if has('clipboard')
   if has('unnamedplus')     " When possible use + register for copy-paste
       set clipboard=unnamed,unnamedplus
