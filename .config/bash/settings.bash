@@ -10,8 +10,18 @@ export VIRTUALENVWRAPPER_PYTHON=$HOME/.local/pipx/venvs/virtualenvwrapper/bin/py
 source $HOME/.local/bin/virtualenvwrapper.sh
 
 # add fzf to path
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ]
+then
+  source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+  # use fd for fzf
+  if fd --version > /dev/null 2>&1
+  then
+    export FZF_DEFAULT_COMMAND="fd --type file --color=always"
+    export FZF_DEFAULT_OPTS="--ansi"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  fi
 
+fi
 # set vimconfig directory
 export VIMCONFIG=$HOME/.config/nvim
 
@@ -28,7 +38,7 @@ shopt -s cdspell;
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
 for option in autocd globstar; do
-    shopt -s "$option" 2> /dev/null;
+  shopt -s "$option" 2> /dev/null;
 done;
 
 # set -o noclobber
