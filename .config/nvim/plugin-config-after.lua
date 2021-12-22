@@ -5,239 +5,267 @@ require("nvim-treesitter.configs").setup {
 -- }
 
 -- nvim lsp {
+
+-- Use a loop to conveniently call "setup" on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = {
+  "arduino_language_server",
+  "bashls",
+  "clangd",
+  "cmake",
+  "cssls",
+  "dockerls",
+  "fortls",
+  "jedi_language_server",
+  "ltex",
+  "pylsp",
+  "pyright",
+  "r_language_server",
+  "sumneko_lua",
+  "texlab",
+  "vimls",
+  "yamlls"
+}
+
 local lsp_installer = require("nvim-lsp-installer")
 
-lsp_installer.settings({
-    ui = {
-        icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗"
-        }
+lsp_installer.settings(
+{
+  ui = {
+    icons = {
+      server_installed = "✓",
+      server_pending = "➜",
+      server_uninstalled = "✗"
     }
-})
+  }
+}
+)
 
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
-  local opts = {}
-
-  -- (optional) Customize the options passed to the server
-  -- if server.name == "tsserver" then
-  --     opts.root_dir = function() ... end
-  -- end
-
-  -- This setup() function is exactly the same as lspconfig's setup function.
-  -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-  server:setup(opts)
-end)
-
-
-local nvim_lsp = require 'lspconfig'
+for _, name in pairs(servers) do
+  local server_is_found, server = lsp_installer.get_server(name)
+  if server_is_found then
+    if not server:is_installed() then
+      print("Installing " .. name)
+      server:install()
+    end
+  end
+end
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
   local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    vim.api.nvim_buf_set_keymap(bufnr, ...)
+  end
+
   local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...) end
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
 
   -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  -- buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap("n", "gD", "<CMD>lua vim.lsp.buf.declaration()<CR>", opts)
+  buf_set_keymap("n", "gd", "<CMD>lua vim.lsp.buf.definition()<CR>", opts)
+  buf_set_keymap("n", "gy", "<CMD>lua vim.lsp.buf.type_definition()<CR>", opts)
+  buf_set_keymap("n", "K", "<CMD>lua vim.lsp.buf.hover()<CR>", opts)
+  buf_set_keymap("n", "gi", "<CMD>lua vim.lsp.buf.implementation()<CR>", opts)
+  buf_set_keymap("n", "rn", "<CMD>lua vim.lsp.buf.rename()<CR>", opts)
 
-  -- Use <tab> to jump to next placeholder
-  -- let g:coc_snippet_next = '<tab>'
-
-  -- Use <C-j>, <C-k> to jump to next/previous placeholder
-  -- buf_set_keymap('n', '<C-j>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-
-  -- Use <C-space>, <C-l> to trigger snippet expand; <C-j> to expand and jump
-  -- buf_set_keymap('i', '<C-j>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  -- buf_set_keymap('i', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-
-  -- Use <C-j> to select text for visual placeholder of snippet
-  -- buf_set_keymap('v', '<C-j>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-
-  -- Use <C-space> to trigger completion.
-
-  -- vim.api.nvim_command [[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
-  -- vim.api.nvim_command [[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]]
-  -- vim.api.nvim_command [[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
+  -- buf_set_keymap("n", "<C-k>", "<CMD>lua vim.lsp.buf.signature_help()<CR>", opts)
+  buf_set_keymap("n", "<space>wa", "<CMD>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
+  buf_set_keymap("n", "<space>wr", "<CMD>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
+  buf_set_keymap("n", "<space>wl", "<CMD>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
+  buf_set_keymap("n", "gr", "<CMD>lua vim.lsp.buf.references()<CR>", opts)
+  buf_set_keymap("n", "<space>e", "<CMD>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
+  buf_set_keymap("n", "[d", "<CMD>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
+  buf_set_keymap("n", "]d", "<CMD>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
+  buf_set_keymap("n", "<space>q", "<CMD>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
+  buf_set_keymap("n", "<space>f", "<CMD>lua vim.lsp.buf.formatting()<CR>", opts)
 
 end
-
--- local coq = require("coq")
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { 'bashls', 'clangd', 'cmake', 'cssls', 'dockerls',
-                  'fortls', 'jedi_language_server', 'pylsp', 'pyright',
-                  'r_language_server', 'texlab', 'vimls', 'yamlls' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
-
-nvim_lsp.ltex.setup({
-})
-
-nvim_lsp.arduino_language_server.setup({
-  cmd =  {
-    -- Required
-    "arduino-language-server",
-    "-cli-config", "~/.arduino15/arduino-cli.yaml",
-    -- Optional
-    "-cli", "~/.local/bin/arduino-cli",
-    "-clangd", "/usr/bin/clangd"
-  }
-})
 
 --Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-nvim_lsp.html.setup{
-  capabilities = capabilities,
-  -- coq.lsp_ensure_capabilities()
-}
-nvim_lsp.jsonls.setup {
-  capabilities = capabilities,
-  -- coq.lsp_ensure_capabilities(
-  commands = {
-    Format = {
-      function()
-        vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
-      end
-    }
+lsp_installer.on_server_ready(function(server)
+  local default_opts = {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    },
   }
-  -- )
-}
-end
-  -- }
 
--- telescope {
+  local server_opts = {
+    ["arduino_language_server"] = function()
+      default_opts.settings = {
+        cmd =  {
+          -- Required
+          "arduino-language-server",
+          "-cli-config", "~/.arduino15/arduino-cli.yaml",
+
+          -- Optional
+          "-cli", "~/.local/bin/arduino-cli",
+          "-clangd", "/usr/bin/clangd"
+        }
+      }
+    end,
+    ["cssls"] = function()
+      default_opts.settings = {
+        capabilities = capabilities,
+      }
+    end,
+    ["html"] = function()
+      default_opts.settings = {
+        capabilities = capabilities,
+      }
+    end,
+    ["jsonls"] =  function()
+      default_opts.settings = {
+        capabilities = capabilities,
+      }
+    end,
+    ["sumneko_lua"] =  function()
+      default_opts.settings = {
+        Lua = {
+          diagnostics = {
+            globals = { "vim" }
+          }
+        }
+      }
+    end,
+  }
+
+  -- Use the server's custom settings, if they exist, otherwise default to the default options
+  local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
+  server:setup(server_options)
+end)
+-- }
+
+-- Telescope {
 local telescope = require("telescope")
-local trouble = require("trouble.providers.telescope")
+
+-- Don't preview binaries{
+-- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#dont-preview-binaries
+local new_maker = function(filepath, bufnr, opts)
+  filepath = vim.fn.expand(filepath)
+  require("plenary.job"):new({
+    command = "file",
+    args = { "--mime-type", "-b", filepath },
+    on_exit = function(j)
+      local mime_type = vim.split(j:result()[1], "/")[1]
+      if mime_type == "text" then
+        require("telescope.previewers").buffer_previewer_maker(filepath, bufnr, opts)
+      else
+        -- maybe we want to write something to the buffer here
+        vim.schedule(function()
+          vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
+        end)
+      end
+    end
+  }):sync()
+end
+-- }
+
+-- local trouble = require("trouble.providers.telescope")
 
 telescope.setup {
   defaults = {
-    mappings = {
-      i = { ["<c-t>"] = trouble.open_with_trouble },
-      n = { ["<c-t>"] = trouble.open_with_trouble },
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with_filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--trim"
+    },
+    buffer_previewer_maker = new_maker,
+  },
+  pickers = {
+    find_files = {
+      mappings = {
+        n = {
+          ["cd"] = function(prompt_bufnr)
+            local selection = require("telescope.actions.state").get_selected_entry()
+            local dir = vim.fn.fnamemodify(selection.path, ":p:h")
+            telescope.close(prompt_bufnr)
+            -- Depending on what you want put `cd`, `lcd`, `tcd`
+            vim.cmd(string.format("silent lcd %s", dir))
+          end
+        }
+      },
+      find_command = { "fd", "--type", "f", "--strip-cwd-prefix" }
     },
   },
-  extensions = {
-    bookmarks = {
-      selected_browser = 'firefox',
-      url_open_plugin = 'open_browser',
-      firefox_profile_name = 'wklfjx5g.default',
-    }
-  }
 }
 
-telescope.load_extension('ultisnips')
-telescope.load_extension('coc')
-telescope.load_extension('vim_bookmarks')
-telescope.load_extension('project')
-telescope.load_extension('bookmarks')
+-- File Pickers{
+vim.api.nvim_set_keymap("n", "<C-P>", "<CMD>lua require('telescope-config').project_files()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "-", "<CMD>lua require('telescope.builtin').file_browser()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>gr", "<CMD>lua require('telescope.builtin').live_grep()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>fg", "<CMD>lua require('telescope.builtin').grep_string()<CR>", {noremap = true, silent = true})
+-- }
 
-  -- File Pickers{
-  vim.api.nvim_set_keymap('n', '<C-P>', '<CMD>lua require(\'telescope-config\').project_files()<CR>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '-', '<CMD>lua require(\'telescope.builtin\').file_browser()<CR>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>gr', '<CMD>lua require(\'telescope.builtin\').live_grep()<CR>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fg', '<CMD>lua require(\'telescope.builtin\').grep_string()<CR>', {noremap = true, silent = true})
-  -- }
+-- VIM Pickers{
+vim.api.nvim_set_keymap("n", "<localleader>bf", "<CMD>lua require('telescope.builtin').buffers()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>hs", "<CMD>lua require('telescope.builtin').command_history()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>h", "<CMD>lua require('telescope.builtin').help_tags()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>m", "<CMD>lua require('telescope.builtin').marks()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>qf", "<CMD>lua require('telescope.builtin').quickfix()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>j", "<CMD>lua require('telescope.builtin').jumplist()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>o", "<CMD>lua require('telescope.builtin').vim_options()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>r", "<CMD>lua require('telescope.builtin').registers()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "z=", "<CMD>lua require('telescope.builtin').spell_suggest()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>k", "<CMD>lua require('telescope.builtin').keymaps()<CR>", {noremap = true, silent = true})
+--vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", {noremap = true, silent = true})
+--vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').current_buffer_tags()<CR>", {noremap = true, silent = true})
+--vim.api.nvim_set_keymap("n", "<localleader>nc", "<CMD>lua require('telescope-config').nvim_config()<CR>", {noremap = true, silent = true})
+-- }
 
-  -- VIM Pickers{
-  vim.api.nvim_set_keymap('n', '<localleader>buf', '<cmd>lua require(\'telescope.builtin\').buffers()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>hist', '<cmd>lua require(\'telescope.builtin\').command_history()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>h', '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>m', '<cmd>lua require(\'telescope.builtin\').marks()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>qf', '<cmd>lua require(\'telescope.builtin\').quickfix()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>jmp', '<cmd>lua require(\'telescope.builtin\').jumplist()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>opt', '<cmd>lua require(\'telescope.builtin\').vim_options()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>reg', '<cmd>lua require(\'telescope.builtin\').registers()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', 'z=', '<cmd>lua require(\'telescope.builtin\').spell_suggest()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>km', '<cmd>lua require(\'telescope.builtin\').keymaps()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').current_buffer_fuzzy_find()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').current_buffer_tags()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>nc', '<CMD>lua require(\'telescope-config\').nvim_config()<CR>', {noremap = true, silent = true})
-  -- }
+-- Neovim LSP Pickers {
+vim.api.nvim_set_keymap("n", "<leader>ca", "<CMD>lua require('telescope.builtin').lsp_code_actions()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>sd", "<CMD>lua require('telescope.builtin').lsp_document_symbols()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>sw", "<CMD>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>", {noremap = true, silent = true})
+--vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').diagnostics({["bufnr"]=0})<CR>", {noremap = true, silent = true})
+--vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').diagnostics()<CR>", {noremap = true, silent = true}) vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').lsp_implementations()<CR>", {noremap = true, silent = true})
+-- }
 
-  -- Neovim LSP Pickers {
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_document_symbols()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_workspace_symbols()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_dynamic_workspace_symbols()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_code_actions()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_document_diagnostics()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_workspace_diagnostics()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_implementations()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_definitions()<cr>', {noremap = true, silent = true})
-  --vim.api.nvim_set_keymap('n', '<localleader>fh', '<cmd>lua require(\'telescope.builtin\').lsp_type_definitions()<cr>', {noremap = true, silent = true})
-  -- }
+-- Git Pickers {
+vim.api.nvim_set_keymap("n", "<localleader>ci", "<CMD>lua require('telescope.builtin').git_commits()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>bci", "<CMD>lua require('telescope.builtin').git_bcommits()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>br", "<CMD>lua require('telescope.builtin').git_branches()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>gs", "<CMD>lua require('telescope.builtin').git_status()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>st", "<CMD>lua require('telescope.builtin').git_stash()<CR>", {noremap = true, silent = true})
+-- }
 
-  -- Git Pickers {
-  vim.api.nvim_set_keymap('n', '<localleader>ci', '<cmd>lua require(\'telescope.builtin\').git_commits()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>bci', '<cmd>lua require(\'telescope.builtin\').git_bcommits()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>br', '<cmd>lua require(\'telescope.builtin\').git_branches()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>gs', '<cmd>lua require(\'telescope.builtin\').git_status()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>st', '<cmd>lua require(\'telescope.builtin\').git_stash()<cr>', {noremap = true, silent = true})
-  -- }
+-- Extensions {
+telescope.load_extension("ultisnips")
+telescope.load_extension("vim_bookmarks")
 
-  -- Extensions {
-  vim.api.nvim_set_keymap('n', '<localleader>p', '<cmd>lua require(\'telescope\').extensions.project.project{}<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>sn', '<cmd>lua require(\'telescope\').extensions.ultisnips.ultisnips{}<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', 'ma', '<cmd>lua require(\'telescope\').extensions.vim_bookmarks.all()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<localleader>bm', '<cmd>lua require(\'telescope\').extensions.vim_bookmarks.current_file()<cr>', {noremap = true, silent = true})
-  -- }
+vim.api.nvim_set_keymap("n", "<localleader>sn", "<CMD>lua require('telescope').extensions.ultisnips.ultisnips{}<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "ma", "<CMD>lua require('telescope').extensions.vim_bookmarks.all()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>bm", "<CMD>lua require('telescope').extensions.vim_bookmarks.current_file()<CR>", {noremap = true, silent = true})
 -- }
 
 -- Trouble {
-require("trouble").setup {
-  -- your configuration comes here
-  -- or leave it empty to use the default settings
-  -- refer to the configuration section below
-}
+require("trouble").setup {}
 
-vim.api.nvim_set_keymap("n", "<localleader>xx", "<cmd>Trouble<cr>", {silent = true, noremap = true})
-vim.api.nvim_set_keymap("n", "<localleader>xw", "<cmd>Trouble lsp_workspace_diagnostics<cr>", {silent = true, noremap = true})
-vim.api.nvim_set_keymap("n", "<localleader>xd", "<cmd>Trouble lsp_document_diagnostics<cr>", {silent = true, noremap = true})
-vim.api.nvim_set_keymap("n", "<localleader>xl", "<cmd>Trouble loclist<cr>", {silent = true, noremap = true})
-vim.api.nvim_set_keymap("n", "<localleader>xq", "<cmd>Trouble quickfix<cr>", {silent = true, noremap = true})
-vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
+vim.api.nvim_set_keymap("n", "<localleader>xx", "<CMD>Trouble<CR>", {silent = true, noremap = true})
+vim.api.nvim_set_keymap("n", "<localleader>xw", "<CMD>Trouble workspace_diagnostics<CR>", {silent = true, noremap = true})
+vim.api.nvim_set_keymap("n", "<localleader>xd", "<CMD>Trouble document_diagnostics<CR>", {silent = true, noremap = true})
+vim.api.nvim_set_keymap("n", "<localleader>xl", "<CMD>Trouble loclist<CR>", {silent = true, noremap = true})
+vim.api.nvim_set_keymap("n", "<localleader>xq", "<CMD>Trouble quickfix<CR>", {silent = true, noremap = true})
+vim.api.nvim_set_keymap("n", "gR", "<CMD>Trouble lsp_references<CR>", {silent = true, noremap = true})
 -- }
 
--- -- todo-comments {
+-- todo-comments {
 require("todo-comments").setup {
   colors = {
     error = { "#DC2626" },
@@ -248,6 +276,22 @@ require("todo-comments").setup {
   },
 }
 
-vim.api.nvim_set_keymap('n', '<localleader>td', '<CMD>TodoTrouble<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<localleader>td", "<CMD>TodoTrouble<CR>", {noremap = true, silent = true})
 -- }
 
+require("coq_3p") {
+  {
+    src = "repl",
+    max_lines = 99,
+    deadline = 500,
+    unsafe = { "sudo", "rm", "poweroff", "mv", "shutdown", "reboot" },
+  },
+  { src = "nvimlua", short_name = "nLUA", conf_only = true },
+  { src = "bc", short_name = "MATH", precision = 6 },
+  { src = "figlet", short_name = "BIG" },
+  { src = "vimtex", short_name = "vTEX" },
+}
+
+
+
+-- }

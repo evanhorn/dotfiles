@@ -45,7 +45,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   " }
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " }
 
@@ -53,50 +52,9 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'neovim/nvim-lspconfig'
   Plug 'williamboman/nvim-lsp-installer'
 
-  " " COQ {
-  "   " main one
-  "   Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-  "   " 9000+ Snippets
-  "   Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-
-  "   " lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
-  "   " Need to **configure separately**
-
-  "   Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
-  "   " - shell repl
-  "   " - nvim lua api
-  "   " - scientific calculator
-  "   " - comment banner
-  "   " - etc
-  " " }
-
-  " " CMP {
-  "   Plug 'hrsh7th/cmp-nvim-lsp'
-  "   Plug 'hrsh7th/cmp-buffer'
-  "   Plug 'hrsh7th/cmp-path'
-  "   Plug 'hrsh7th/cmp-cmdline'
-  "   Plug 'hrsh7th/nvim-cmp'
-
-  "   " For vsnip users.
-  "   Plug 'hrsh7th/cmp-vsnip'
-  "   Plug 'hrsh7th/vim-vsnip'
-
-  "   " For luasnip users.
-  "   " Plug 'L3MON4D3/LuaSnip'
-  "   " Plug 'saadparwaiz1/cmp_luasnip'
-
-  "   " For ultisnips users.
-  "   " Plug 'SirVer/ultisnips'
-  "   " Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-
-  "   " For snippy users.
-  "   " Plug 'dcampos/nvim-snippy'
-  "   " Plug 'dcampos/cmp-snippy'
-  " " }
-
-  " " LSPSAGA {
-  "   Plug 'glepnir/lspsaga.nvim'
-  " " }
+  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+  Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 
 " }
 
@@ -106,10 +64,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'nvim-telescope/telescope.nvim'
   " Telescope Extensions {
     Plug 'fhill2/telescope-ultisnips.nvim'
-    Plug 'fannheyward/telescope-coc.nvim'
     Plug 'tom-anders/telescope-vim-bookmarks.nvim'
-    Plug 'dhruvmanila/telescope-bookmarks.nvim'
-    Plug 'nvim-telescope/telescope-project.nvim'
   " }
 " }
 
