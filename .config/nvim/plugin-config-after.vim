@@ -197,7 +197,12 @@
 
 " COQ {
   let g:coq_settings = { 'auto_start': v:true }
-  " let g:coq_settings = { 'auto_start': 'shut-up' }
+  " let g:coq_settings = { 'auto_start': 'shut-up }
+
+  let g:coq_settings.keymap = {
+        \'jump_to_mark': '<C-space>',
+        \'eval_snips': '<leader>j',
+        \}
 " }
 
 " ale {
@@ -267,12 +272,6 @@
     nnoremap <localleader>mg  <cmd>MemoGrep<CR>
   " }
 
-" }
-
-" UltiSnips {
-  let g:UltiSnipsExpandTrigger = '<tab>'
-  let g:UltiSnipsJumpForwardTrigger = '<tab>'
-  let g:UltiSnipsJumpBakwardTrigger = '<s-tab>'
 " }
 
 if filereadable(expand('$HOME/.config/nvim/plugin-config-after.lua'))

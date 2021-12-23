@@ -246,10 +246,8 @@ vim.api.nvim_set_keymap("n", "<localleader>st", "<CMD>lua require('telescope.bui
 -- }
 
 -- Extensions {
-telescope.load_extension("ultisnips")
 telescope.load_extension("vim_bookmarks")
 
-vim.api.nvim_set_keymap("n", "<localleader>sn", "<CMD>lua require('telescope').extensions.ultisnips.ultisnips{}<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "ma", "<CMD>lua require('telescope').extensions.vim_bookmarks.all()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<localleader>bm", "<CMD>lua require('telescope').extensions.vim_bookmarks.current_file()<CR>", {noremap = true, silent = true})
 -- }
@@ -291,7 +289,5 @@ require("coq_3p") {
   { src = "figlet", short_name = "BIG" },
   { src = "vimtex", short_name = "vTEX" },
 }
-
-
 
 -- }

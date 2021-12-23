@@ -29,7 +29,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'troydm/zoomwintab.vim'
   Plug 'kshenoy/vim-signature'
   Plug 'MattesGroeger/vim-bookmarks'
-  Plug 'tyru/open-browser.vim'
   Plug 'tpope/vim-obsession'
 
   " Colorschemes {
@@ -52,20 +51,12 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'neovim/nvim-lspconfig'
   Plug 'williamboman/nvim-lsp-installer'
 
-  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-  Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
-
 " }
 
 " Files and fuzzy search {
-  " Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
-  " Telescope Extensions {
-    Plug 'fhill2/telescope-ultisnips.nvim'
-    Plug 'tom-anders/telescope-vim-bookmarks.nvim'
-  " }
+  Plug 'tom-anders/telescope-vim-bookmarks.nvim'
 " }
 
 " Tmux Interface {
@@ -101,9 +92,9 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 " }
 
 " Snippets & AutoComplete {
-  Plug 'honza/vim-snippets'
-  Plug 'wellle/tmux-complete.vim'
-  Plug 'SirVer/ultisnips'
+  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+  Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 " }
 
 " HTML/CSS {
