@@ -16,8 +16,9 @@ for LOCAL_PATH in ".rvm/bin" "bin" ".local/bin"; do
   fi
 done
 
-# So pyenv gets recognized
-eval "$(pyenv init -)"
-
-# Load pyenv-virtualenv automatically
-eval "$(pyenv virtualenv-init -)"
+if [[ $(type -t penv) == function ]] ; then
+  # So pyenv gets recognized
+  eval "$(pyenv init -)"
+  # Load pyenv-virtualenv automatically
+  eval "$(pyenv virtualenv-init -)"
+fi
