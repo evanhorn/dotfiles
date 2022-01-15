@@ -40,7 +40,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 
   " Syntax {
     Plug 'kalafut/vim-taskjuggler'
-    Plug 'evanhorn/vim-openfoam'
   " }
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
