@@ -200,7 +200,7 @@
   " let g:coq_settings = { 'auto_start': 'shut-up }
 
   let g:coq_settings.keymap = {
-        \'jump_to_mark': '<C-space>',
+        \'jump_to_mark': '<C-o>',
         \'eval_snips': '<leader>j',
         \}
 " }
