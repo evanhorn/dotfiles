@@ -21,6 +21,10 @@ wheels/
 *.manifest
 *.spec
 
+# Python virtual environment configuration file
+pyvenv.cfg
+lib64
+
 # Log files
 pip-log.txt
 pip-delete-this-directory.txt
