@@ -4,8 +4,91 @@ require("nvim-treesitter.configs").setup {
   highlight = {
     enable = true,
     disable = { "sh", "bash"},
+    additional_vim_regex_highlighting = false,
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+      --   -- f keymaps are for key-values
+      --   ["af"] = "@function.outer",
+      --   ["if"] = "@function.inner",
+      --   -- c keymaps are for dictionaries
+      --   ["ac"] = "@class.outer",
+      --   ["ic"] = "@class.inner",
+      --   -- k keymaps are for comments
+      --   ["ak"] = "@comment.outer",
+      --   ["ik"] = "@comment.inner",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true,
+      -- Granular control over motions on key-values and dictionaries
+      -- if you want it
+      -- goto_next_start = {
+      --   ["]m"] = "@function.outer",
+      --   ["]]"] = "@class.outer",
+      -- },
+      -- goto_next_end = {
+      --   ["]M"] = "@function.outer",
+      --   ["]["] = "@class.outer",
+      -- },
+      -- goto_previous_start = {
+      --   ["[m"] = "@function.outer",
+      --   ["[["] = "@class.outer",
+      -- },
+      -- goto_previous_end = {
+      --   ["[M"] = "@function.outer",
+      --   ["[]"] = "@class.outer",
+      -- },
+    },
+    swap = {
+      enable = true,
+      -- Swap parameters; ie. if a key-value has multiple values and you want to swap them
+      -- swap_next = {
+      --   ["<leader>a"] = "@parameter.inner",
+      -- },
+      -- swap_previous = {
+      --   ["<leader>A"] = "@parameter.inner",
+      -- },
+    },
+  },
+  textsubjects = {
+    enable = true,
+    keymaps = {
+      -- Press v. inside a key-value or a comment (then . or ; repeatedly)
+      ['.'] = 'textsubjects-smart',
+      -- Press v; to select surrounding dictionary
+      [';'] = 'textsubjects-container-outer',
+    }
   },
 }
+-- }
+
+-- Context display for long dictionaries and key-value entries {
+require("treesitter-context").setup({
+    throttle = true,
+    patterns = {
+    -- This will show context for functions, classes and mehod
+    -- in all languages
+        default = { 'function', 'class', 'method' },
+    -- In OpenFOAM files, we have dicts and key-val pairs
+    -- (you might want to add '^list')
+        foam = { '^dict$', '^key_value$' }
+    },
+    -- Make sure foam is treated with exact Lua patterns
+    exact_patterns = { foam = true, }
+})
+-- }
+
+-- First things first, can't stand default error signs {
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 -- }
 
 -- nvim lsp {
@@ -24,7 +107,6 @@ local servers = {
   "ltex",
   "pylsp",
   "pyright",
-  "r_language_server",
   "sumneko_lua",
   "texlab",
   "vimls",
@@ -256,6 +338,8 @@ vim.api.nvim_set_keymap("n", "ma", "<CMD>lua require('telescope').extensions.vim
 vim.api.nvim_set_keymap("n", "<localleader>bm", "<CMD>lua require('telescope').extensions.vim_bookmarks.current_file()<CR>", {noremap = true, silent = true})
 -- }
 
+-- }
+
 -- Trouble {
 require("trouble").setup {}
 
@@ -294,4 +378,3 @@ require("coq_3p") {
   { src = "vimtex", short_name = "vTEX" },
 }
 
--- }

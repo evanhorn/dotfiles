@@ -30,6 +30,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'kshenoy/vim-signature'
   Plug 'MattesGroeger/vim-bookmarks'
   Plug 'tpope/vim-obsession'
+  Plug 'karb94/neoscroll.nvim'
 
   " Colorschemes {
     Plug 'iCyMind/NeoSolarized'
@@ -43,6 +44,9 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   " }
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+  Plug 'rrethy/nvim-treesitter-textobjects'
+  Plug 'romgrk/nvim-treesitter-context'
 
 " }
 
