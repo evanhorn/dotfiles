@@ -102,6 +102,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 " }
 
 " Misc {
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'chrisbra/csv.vim'
   Plug 'kevinoid/vim-jsonc'
   Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}

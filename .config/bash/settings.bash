@@ -10,9 +10,23 @@ export VIRTUALENVWRAPPER_PYTHON=$HOME/.local/pipx/venvs/virtualenvwrapper/bin/py
 source $HOME/.local/bin/virtualenvwrapper.sh
 
 # add fzf to path
-if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ]
+if [ -f ~/.fzf.bash ]
 then
-  source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+  source ~/.fzf.bash
+
+  # Note: had to change __fzf_defc "$cmd" _fzf_dir_completion "-o nospace -o dirnames"
+  # to __fzf_defc "$cmd" _fzf_dir_completion "-o default -o bashdefault -o dirnames"
+  # in /shell/completions.bash
+
+  # Host completion
+  _fzf_complete_ssh_notrigger() {
+      FZF_COMPLETION_TRIGGER='' _fzf_host_completion
+  }
+
+  complete -o bashdefault -o default -F _fzf_complete_ssh_notrigger ssh
+  complete -o bashdefault -o default -F _fzf_complete_ssh_notrigger mosh
+  complete -o bashdefault -o default -F _fzf_complete_ssh_notrigger ss
+
   # use fd for fzf
   if fd --version > /dev/null 2>&1
   then
