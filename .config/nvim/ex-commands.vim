@@ -134,3 +134,9 @@ augroup filetypedetect
   au! BufRead,BufNewFile *.pro setfiletype getdp
 augroup END
 
+augroup foam
+  au FileType foam set foldmethod=expr
+  au FileType foam set foldexpr=nvim_treesitter#foldexpr()
+  " Only fold more than 15 lines
+  au FileType foam set foldminlines=15
+augroup END
