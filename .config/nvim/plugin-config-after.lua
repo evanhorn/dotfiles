@@ -157,21 +157,21 @@ local on_attach = function(_, bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap("n", "gD", "<CMD>lua vim.lsp.buf.declaration()<CR>", opts)
   buf_set_keymap("n", "gd", "<CMD>lua vim.lsp.buf.definition()<CR>", opts)
+  buf_set_keymap("n", "gs", "<CMD>lua vim.lsp.buf.signature.help()<CR>", opts)
   buf_set_keymap("n", "gy", "<CMD>lua vim.lsp.buf.type_definition()<CR>", opts)
   buf_set_keymap("n", "K", "<CMD>lua vim.lsp.buf.hover()<CR>", opts)
   buf_set_keymap("n", "gi", "<CMD>lua vim.lsp.buf.implementation()<CR>", opts)
   buf_set_keymap("n", "rn", "<CMD>lua vim.lsp.buf.rename()<CR>", opts)
 
-  -- buf_set_keymap("n", "<C-k>", "<CMD>lua vim.lsp.buf.signature_help()<CR>", opts)
-  buf_set_keymap("n", "<space>wa", "<CMD>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<space>wr", "<CMD>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<space>wl", "<CMD>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
+  buf_set_keymap("n", "<localleader>wa", "<CMD>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
+  buf_set_keymap("n", "<localleader>wr", "<CMD>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
+  buf_set_keymap("n", "<localleader>wl", "<CMD>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
   buf_set_keymap("n", "gr", "<CMD>lua vim.lsp.buf.references()<CR>", opts)
-  buf_set_keymap("n", "<space>e", "<CMD>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-  buf_set_keymap("n", "[d", "<CMD>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-  buf_set_keymap("n", "]d", "<CMD>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-  buf_set_keymap("n", "<space>q", "<CMD>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-  buf_set_keymap("n", "<space>f", "<CMD>lua vim.lsp.buf.formatting()<CR>", opts)
+  buf_set_keymap("n", "<localleader>e", "<CMD>lua vim.diagnostic.open_float()<CR>", opts)
+  buf_set_keymap("n", "[d", "<CMD>lua vim.diagnostic.goto_prev()<CR>", opts)
+  buf_set_keymap("n", "]d", "<CMD>lua vim.diagnostic.goto_next()<CR>", opts)
+  buf_set_keymap("n", "<localleader>q", "<CMD>lua vim.diagnostic.set_loclist()<CR>", opts)
+  buf_set_keymap("n", "<localleader>f", "<CMD>lua vim.lsp.buf.formatting()<CR>", opts)
 
 end
 
@@ -310,17 +310,12 @@ vim.api.nvim_set_keymap("n", "<localleader>o", "<CMD>lua require('telescope.buil
 vim.api.nvim_set_keymap("n", "<localleader>r", "<CMD>lua require('telescope.builtin').registers()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "z=", "<CMD>lua require('telescope.builtin').spell_suggest()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<localleader>k", "<CMD>lua require('telescope.builtin').keymaps()<CR>", {noremap = true, silent = true})
---vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", {noremap = true, silent = true})
---vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').current_buffer_tags()<CR>", {noremap = true, silent = true})
---vim.api.nvim_set_keymap("n", "<localleader>nc", "<CMD>lua require('telescope-config').nvim_config()<CR>", {noremap = true, silent = true})
 -- }
 
 -- Neovim LSP Pickers {
 vim.api.nvim_set_keymap("n", "<leader>ca", "<CMD>lua require('telescope.builtin').lsp_code_actions()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<localleader>sd", "<CMD>lua require('telescope.builtin').lsp_document_symbols()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<localleader>sw", "<CMD>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>", {noremap = true, silent = true})
---vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').diagnostics({["bufnr"]=0})<CR>", {noremap = true, silent = true})
---vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').diagnostics()<CR>", {noremap = true, silent = true}) vim.api.nvim_set_keymap("n", "<localleader>fh", "<CMD>lua require('telescope.builtin').lsp_implementations()<CR>", {noremap = true, silent = true})
 -- }
 
 -- Git Pickers {
