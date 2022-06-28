@@ -129,6 +129,8 @@
 " set it to the first line when editing a git commit message
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
+au FileType gnuplot setlocal commentstring=#\ %s
+
 augroup foam
   au FileType foam set foldmethod=expr
   au FileType foam set foldexpr=nvim_treesitter#foldexpr()
