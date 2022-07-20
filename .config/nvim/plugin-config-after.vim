@@ -250,6 +250,7 @@
     let g:vimtex_view_method = 'zathura'
     let g:vimtex_fold_enabled = 1
     let g:vimtex_quickfix_mode = 0
+    let g:vimtex_subfile_start_local = 1
     let g:vimtex_grammar_textidote = {
           \ 'jar': '/opt/textidote/textidote.jar',
           \ }
