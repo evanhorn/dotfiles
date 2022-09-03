@@ -24,6 +24,7 @@ wheels/
 # Python virtual environment configuration file
 pyvenv.cfg
 lib64
+pyrightconfig.json
 
 # Log files
 pip-log.txt
@@ -98,3 +99,8 @@ ENV/
 
 # General
 tags
+.gitignore
+.vim-bookmarks
+*~
+*.bak
+*.tmp
