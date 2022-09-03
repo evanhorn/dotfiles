@@ -64,27 +64,6 @@
      let g:airline_right_sep='‹' " Slightly fancier than '<'
    endif
 
-  " ALE Integration {
-
-    " enable/disable ALE integration
-    let g:airline#extensions#ale#enabled = 1
-
-    " ALE error_symbol
-    let airline#extensions#ale#error_symbol = 'E:'
-
-    " ALE warning
-    let airline#extensions#ale#warning_symbol = 'W:'
-
-    " ALE show_line_numbers
-    let airline#extensions#ale#show_line_numbers = 1
-
-    " ALE open_lnum_symbol
-    let airline#extensions#ale#open_lnum_symbol = '(L'
-
-    " ALE close_lnum_symbol
-    let airline#extensions#ale#close_lnum_symbol = ')'
-  " }
-
  " Rainbow {
    let g:rainbow_active = 1
  " }
@@ -203,26 +182,6 @@
         \'jump_to_mark': '<C-o>',
         \'eval_snips': '<leader>j',
         \}
-" }
-
-" ale {
-  let g:ale_disable_lsp = 1
-
-  let g:ale_linters = {
-        \   'python': ['jedils', 'flake8', 'mypy', 'pylint', 'pyright'],
-        \ }
-
-  let g:ale_linters_ignore = {
-        \ 'tex': ['redpen']
-        \ }
-
-  " Mappings in the style of unimpaired-next
-  nmap <silent> [W <Plug>(ale_first)
-  nmap <silent> [w <Plug>(ale_previous)
-  nmap <silent> ]w <Plug>(ale_next)
-  nmap <silent> ]W <Plug>(ale_last)
-
-  " let g:ale_completion_enabled = 1
 " }
 
 " " JSON {

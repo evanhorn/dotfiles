@@ -50,8 +50,9 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 " }
 
 " Langauge server {
+  Plug 'williamboman/mason.nvim'
+  Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'neovim/nvim-lspconfig'
-  Plug 'williamboman/nvim-lsp-installer'
 
 " }
 
@@ -75,8 +76,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'folke/todo-comments.nvim'
   Plug 'folke/trouble.nvim'
   Plug 'kyazdani42/nvim-web-devicons'
-
-  Plug 'dense-analysis/ale'
 
   " Testing {
     " NOTE: read up on these packages "

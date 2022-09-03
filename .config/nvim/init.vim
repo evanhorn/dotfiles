@@ -46,6 +46,3 @@ source $HOME/.config/nvim/plugins.vim
 if filereadable(expand("$HOME/.vimrc_after"))
   source $HOME/.vimrc_after
 endif
-
-hi CocFloating ctermfg=12 ctermbg=0 guifg=#839496 guibg=#073642
-
