@@ -98,7 +98,7 @@ ENV/
 *.fls
 
 # General
-tags
+tags*
 .gitignore
 .vim-bookmarks
 *~
