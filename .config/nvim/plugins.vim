@@ -10,6 +10,15 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'junegunn/vim-plug'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-commentary'
+  Plug 'junegunn/vim-easy-align'
+  if executable('ctags')
+    Plug 'ludovicchabant/vim-gutentags'
+    Plug 'liuchengxu/vista.vim'
+  endif
+  Plug 'folke/todo-comments.nvim'
+  Plug 'folke/trouble.nvim'
+  Plug 'kyazdani42/nvim-web-devicons'
 " }
 
 " Editor Configuration {
@@ -67,15 +76,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 " }
 
 " General Programming {
-  Plug 'tpope/vim-commentary'
-  Plug 'godlygeek/tabular'
-  if executable('ctags')
-    Plug 'ludovicchabant/vim-gutentags'
-    Plug 'liuchengxu/vista.vim'
-  endif
-  Plug 'folke/todo-comments.nvim'
-  Plug 'folke/trouble.nvim'
-  Plug 'kyazdani42/nvim-web-devicons'
 
   " Testing {
     " NOTE: read up on these packages "

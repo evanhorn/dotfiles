@@ -125,46 +125,9 @@
     let g:undotree_SetFocusWhenToggle=1
   " }
 
-  " tabular {
-
-    " Tabular align {
-      function! s:align()
-        let p = '^\s*|\s.*\s|\s*$'
-        if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-          let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-          let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-          Tabularize/|/l1
-          normal! 0
-          call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-        endif
-      endfunction
-
-    " Creates auto aligning tabular environment
-    inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
-    " }
-
-    if exists(":Tabularize") || isdirectory(expand("$HOME/.config/nvim/pack/*/start/tabular/"))
-      nmap <leader>a& <cmd>Tabularize /&<CR>
-      vmap <leader>a& <cmd>Tabularize /&<CR>
-      nmap <leader>a= <cmd>Tabularize /^[^=]*\zs=<CR>
-      vmap <leader>a= <cmd>Tabularize /^[^=]*\zs=<CR>
-      " nmap <leader>a= <cmd>Tabularize /=<CR>
-      " vmap <leader>a= <cmd>Tabularize /=<CR>
-      nmap <leader>a=> <cmd>Tabularize /=><CR>
-      vmap <leader>a=> <cmd>Tabularize /=><CR>
-      nmap <leader>a: <cmd>Tabularize /:<CR>
-      vmap <leader>a: <cmd>Tabularize /:<CR>
-      " nmap <leader>a: <cmd>Tabularize /:\zs<CR>
-      " vmap <leader>a: <cmd>Tabularize /:\zs<CR>
-      nmap <leader>a:: <cmd>Tabularize /:\zs<CR>
-      vmap <leader>a:: <cmd>Tabularize /:\zs<CR>
-      nmap <leader>a, <cmd>Tabularize /,<CR>
-      vmap <leader>a, <cmd>Tabularize /,<CR>
-      nmap <leader>a,, <cmd>Tabularize /,\zs<CR>
-      vmap <leader>a,, <cmd>Tabularize /,\zs<CR>
-      nmap <leader>a<Bar> <cmd>Tabularize /<Bar><CR>
-      vmap <leader>a<Bar> <cmd>Tabularize /<Bar><CR>
-    endif
+  " vim-easy-align {
+    xmap ga <Plug>(EasyAlign)
+    nmap ga <Plug>(EasyAlign)
   " }
 
   " vim-tmux {
