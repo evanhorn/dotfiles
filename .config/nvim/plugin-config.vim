@@ -203,7 +203,3 @@
   " }
 
 " }
-
-if filereadable(expand('$HOME/.config/nvim/plugin-config-after.lua'))
-  source $HOME/.config/nvim/plugin-config-after.lua
-endif

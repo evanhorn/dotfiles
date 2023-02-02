@@ -1,9 +1,5 @@
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
-if filereadable(expand('$HOME/.config/nvim/plugin-config-before.vim'))
-  source $HOME/.config/nvim/plugin-config-before.vim
-endif
-
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share/nvim/plugged')
 
 " General {
@@ -124,6 +120,18 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 
 call plug#end()
 
-if filereadable(expand('$HOME/.config/nvim/plugin-config-after.vim'))
-  source $HOME/.config/nvim/plugin-config-after.vim
+if filereadable(expand('$HOME/.config/nvim/plugin-config.vim'))
+  source $HOME/.config/nvim/plugin-config.vim
+endif
+
+if filereadable(expand('$HOME/.config/nvim/plugin-config.lua'))
+  source $HOME/.config/nvim/plugin-config.lua
+endif
+
+if filereadable(expand('$HOME/.config/nvim/plugin-config-local.vim'))
+  source $HOME/.config/nvim/plugin-config-local.vim
+endif
+
+if filereadable(expand('$HOME/.config/nvim/plugin-config-local.lua'))
+  source $HOME/.config/nvim/plugin-config-local.lua
 endif
