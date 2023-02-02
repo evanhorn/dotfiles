@@ -188,6 +188,14 @@
           \}
   " }
 
+  " vim-textidote {
+  let g:textidote_jar = '/opt/textidote/textidote.jar'
+  " }
+
+  " vim-angry-reviewer {
+  nnoremap <leader>ar :AngryReviewer<cr>
+  " }
+
   " memolist {
     nnoremap <localleader>mn  <cmd>MemoNew<CR>
     nnoremap <localleader>ml  <cmd>MemoList<CR>

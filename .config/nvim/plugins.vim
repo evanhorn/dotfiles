@@ -112,6 +112,8 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 
 " LaTeX {
   Plug 'lervag/vimtex'
+  Plug 'PatrBal/vim-textidote'
+  Plug 'anufrievroman/vim-angry-reviewer'
 " }
 
 " Writing {
