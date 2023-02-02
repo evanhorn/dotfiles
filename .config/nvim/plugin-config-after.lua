@@ -6,6 +6,7 @@ require("nvim-treesitter.configs").setup{
     disable = { "sh", "bash" },
     additional_vim_regex_highlighting = false,
   },
+  ident = { enable = true, disable = { "" }, },
   textobjects = {
     select = {
       enable = true,
@@ -41,6 +42,14 @@ require("nvim-treesitter.configs").setup{
       -- Press v; to select surrounding dictionary
       [';'] = 'textsubjects-container-outer',
     }
+  },
+  rainbow = {
+    enable = true,
+    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = nil, -- Do not enable for files with more than n lines, int
+    -- colors = {}, -- table of hex strings
+    -- termcolors = {} -- table of colour name strings
   },
 }
 -- )

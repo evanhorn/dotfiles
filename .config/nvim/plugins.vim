@@ -33,7 +33,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'tpope/vim-speeddating'
   Plug 'tpope/vim-unimpaired'
   Plug 'vim-scripts/file-line'
-  Plug 'luochen1990/rainbow'
   Plug 'wesQ3/vim-windowswap'
   Plug 'troydm/zoomwintab.vim'
   Plug 'kshenoy/vim-signature'
@@ -55,6 +54,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
   Plug 'nvim-treesitter/nvim-treesitter-context'
+  Plug 'p00f/nvim-ts-rainbow'
 
 " }
 
