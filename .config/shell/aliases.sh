@@ -20,16 +20,16 @@ alias j="jobs"
 alias ls='command ls --color'
 
 # List all files colorized in long format
-alias l="ls -lF"
+alias l="ls -lhF"
 
 # List all files colorized in long format
-alias ll="ls -alF"
+alias ll="ls -alhF"
 
 # List all files colorized in short format
 alias la="ls -A"
 
 # List all dot files colorized in long format
-alias l.="ls -ald .*"
+alias l.="ls -aldh .*"
 
 # Enable aliases to be sudo’ed
 alias sudo="sudo "
