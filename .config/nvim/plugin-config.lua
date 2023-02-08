@@ -3,7 +3,7 @@ require("nvim-treesitter.configs").setup{
   ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true,
-    disable = { "sh", "bash" },
+    disable = { "sh", "bash", "latex" },
     additional_vim_regex_highlighting = false,
   },
   ident = { enable = true, disable = { "" }, },
