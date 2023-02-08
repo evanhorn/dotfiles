@@ -116,6 +116,3 @@ set iskeyword-=#                    " '#' is an end of word designator
 set iskeyword-=-                    " '-' is an end of word designator
 
 set conceallevel=2
-
-let g:tex_flavor = 'latex'
-
