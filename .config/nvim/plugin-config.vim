@@ -193,7 +193,8 @@
   " }
 
   " vim-angry-reviewer {
-  nnoremap <leader>ar :AngryReviewer<cr>
+  nnoremap <localleader>ar :AngryReviewer<cr>
+  let g:AngryReviewerEnglish = 'american'
   " }
 
   " memolist {
