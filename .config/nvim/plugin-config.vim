@@ -204,3 +204,5 @@
   " }
 
 " }
+
+runtime plugin-config-local.vim

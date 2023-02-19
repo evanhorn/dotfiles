@@ -4,7 +4,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 
 " General {
   Plug 'junegunn/vim-plug'
-  Plug 'tpope/vim-surround'
+  Plug 'machakann/vim-sandwich'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
   Plug 'junegunn/vim-easy-align'
@@ -120,18 +120,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
 
 call plug#end()
 
-if filereadable(expand('$HOME/.config/nvim/plugin-config.vim'))
-  source $HOME/.config/nvim/plugin-config.vim
-endif
+runtime plugin-config.vim
 
-if filereadable(expand('$HOME/.config/nvim/plugin-config.lua'))
-  source $HOME/.config/nvim/plugin-config.lua
-endif
-
-if filereadable(expand('$HOME/.config/nvim/plugin-config-local.vim'))
-  source $HOME/.config/nvim/plugin-config-local.vim
-endif
-
-if filereadable(expand('$HOME/.config/nvim/plugin-config-local.lua'))
-  source $HOME/.config/nvim/plugin-config-local.lua
-endif
+runtime plugin-config.lua
+runtime plugin-config-local.lua

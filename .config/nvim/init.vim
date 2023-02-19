@@ -34,15 +34,11 @@
 
 " }
 
-if filereadable(expand("$HOME/.vimrc_before"))
-  source $HOME/.vimrc_before
-endif
+runtime vimrc_before
 
-source $HOME/.config/nvim/basic-settings.vim
-source $HOME/.config/nvim/mappings.vim
-source $HOME/.config/nvim/ex-commands.vim
-source $HOME/.config/nvim/plugins.vim
+runtime basic-settings.vim
+runtime mappings.vim
+runtime ex-commands.vim
+runtime plugins.vim
 
-if filereadable(expand("$HOME/.vimrc_after"))
-  source $HOME/.vimrc_after
-endif
+runtime vimrc_after
