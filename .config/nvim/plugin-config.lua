@@ -130,7 +130,7 @@ local servers = {
       },
     },
   },
-  sumneko_lua = {
+  lua_ls = {
     Lua = {
       diagnostics = {
         globals = { "vim" }
