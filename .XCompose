@@ -21,10 +21,11 @@
 <Multi_key> <G> <O> : "Ω"    U03A9    # GREEK CAPITAL LETTER OMEGA
 
 # DOUBLES (additional stroke <Q>)
-<Multi_key> <G> <Q> <T> : "Θ"    U0398    # GREEK CAPITAL LETTER THETA
+<Multi_key> <G> <Q> <N> : "∇"    U2207    # NABLA
 <Multi_key> <G> <Q> <O> : "Ο"    U039F    # GREEK CAPITAL LETTER OMICRON
-<Multi_key> <G> <Q> <X> : "Ξ"    U039E    # GREEK CAPITAL LETTER XI
 <Multi_key> <G> <Q> <P> : "Ψ"    U03A8    # GREEK CAPITAL LETTER PSI
+<Multi_key> <G> <Q> <T> : "Θ"    U0398    # GREEK CAPITAL LETTER THETA
+<Multi_key> <G> <Q> <X> : "Ξ"    U039E    # GREEK CAPITAL LETTER XI
 
 # greek small letters
 <Multi_key> <g> <a> : "α"    U03B1    # GREEK SMALL LETTER ALPHA
@@ -49,8 +50,9 @@
 <Multi_key> <g> <o> : "ω"    U03C9    # GREEK SMALL LETTER OMEGA
 
 # doubles (additional stroke <q>)
-<Multi_key> <g> <q> <t> : "θ"    U03B8    # GREEK SMALL LETTER THETA
+<Multi_key> <g> <q> <f> : "ϕ"    U03D5    # GREEK SMALL LETTER PHI
 <Multi_key> <g> <q> <o> : "ο"    U03BF    # GREEK SMALL LETTER OMICRON
 <Multi_key> <g> <q> <p> : "ψ"    U03C8    # GREEK SMALL LETTER PSI
 <Multi_key> <g> <q> <s> : "ς"    U03C2    # GREEK SMALL LETTER FINAL SIGMA
+<Multi_key> <g> <q> <t> : "θ"    U03B8    # GREEK SMALL LETTER THETA
 <Multi_key> <g> <q> <x> : "ξ"    U03BE    # GREEK SMALL LETTER XI
