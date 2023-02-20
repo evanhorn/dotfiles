@@ -3,7 +3,7 @@
 runtime vimrc_before
 
 lua require('user.settings')
-runtime mappings.vim
+lua require('user.mappings')
 runtime plugins.vim
 
 runtime vimrc_after
