@@ -2,18 +2,7 @@
 
 runtime vimrc_before
 
-" Backup and undo files {
-  set backup                  " Backups are nice ...
-  set backupdir=$HOME/.local/state/nvim/backup/
-  if has('persistent_undo')
-    set undofile
-  endif
-" }
-
-" neovim virtualenv executable
-let g:python3_host_prog = expand("$HOME/.virtualenvs/neovim/bin/python")
-
-runtime basic-settings.vim
+lua require('user.settings')
 runtime mappings.vim
 runtime plugins.vim
 
