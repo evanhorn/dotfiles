@@ -67,45 +67,48 @@ telescope.setup{
   },
 }
 
+local builtin = require('telescope.builtin')
+local silent = {silent = true}
+
 -- File Pickers(
-vim.api.nvim_set_keymap("n", "<C-P>", "<CMD>lua require('telescope-config').project_files()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "-", "<CMD>lua require('telescope.builtin').file_browser()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>gr", "<CMD>lua require('telescope.builtin').live_grep()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>fg", "<CMD>lua require('telescope.builtin').grep_string()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "-", telescope.extensions.file_browser.file_browser, silent)
+vim.keymap.set("n", "<localleader>ff", builtin.find_files, silent)
+vim.keymap.set("n", "<localleader>fg", builtin.live_grep, silent)
+vim.keymap.set("n", "<localleader>fb", builtin.buffers, silent)
+vim.keymap.set("n", "<localleader>gr", builtin.grep_string, silent)
 -- )
 
 -- VIM Pickers(
-vim.api.nvim_set_keymap("n", "<localleader>bf", "<CMD>lua require('telescope.builtin').buffers()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>hs", "<CMD>lua require('telescope.builtin').command_history()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>h", "<CMD>lua require('telescope.builtin').help_tags()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>m", "<CMD>lua require('telescope.builtin').marks()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>qf", "<CMD>lua require('telescope.builtin').quickfix()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>j", "<CMD>lua require('telescope.builtin').jumplist()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>o", "<CMD>lua require('telescope.builtin').vim_options()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>r", "<CMD>lua require('telescope.builtin').registers()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "z=", "<CMD>lua require('telescope.builtin').spell_suggest()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>k", "<CMD>lua require('telescope.builtin').keymaps()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<localleader>fb", builtin.buffers, silent)
+vim.keymap.set("n", "<localleader>hs", builtin.command_history, silent)
+vim.keymap.set("n", "<localleader>h", builtin.help_tags, silent)
+vim.keymap.set("n", "<localleader>m", builtin.marks, silent)
+vim.keymap.set("n", "<localleader>qf", builtin.quickfix, silent)
+vim.keymap.set("n", "<localleader>j", builtin.jumplist, silent)
+vim.keymap.set("n", "<localleader>o", builtin.vim_options, silent)
+vim.keymap.set("n", "<localleader>r", builtin.registers, silent)
+vim.keymap.set("n", "z=", builtin.spell_suggest, silent)
+vim.keymap.set("n", "<localleader>k", builtin.keymaps, silent)
 -- )
 
 -- Neovim LSP Pickers (
-vim.api.nvim_set_keymap("n", "<leader>ca", "<CMD>lua require('telescope.builtin').lsp_code_actions()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>sd", "<CMD>lua require('telescope.builtin').lsp_document_symbols()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>sw", "<CMD>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<localleader>sd", builtin.lsp_document_symbols, silent)
+vim.keymap.set("n", "<localleader>sw", builtin.lsp_dynamic_workspace_symbols, silent)
 -- )
 
 -- Git Pickers (
-vim.api.nvim_set_keymap("n", "<localleader>ci", "<CMD>lua require('telescope.builtin').git_commits()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>bci", "<CMD>lua require('telescope.builtin').git_bcommits()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>br", "<CMD>lua require('telescope.builtin').git_branches()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>gs", "<CMD>lua require('telescope.builtin').git_status()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>st", "<CMD>lua require('telescope.builtin').git_stash()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<localleader>ci", builtin.git_commits, silent)
+vim.keymap.set("n", "<localleader>bci", builtin.git_bcommits, silent)
+vim.keymap.set("n", "<localleader>br", builtin.git_branches, silent)
+vim.keymap.set("n", "<localleader>gs", builtin.git_status, silent)
+vim.keymap.set("n", "<localleader>st", builtin.git_stash, silent)
 -- )
 
 -- Extensions (
 telescope.load_extension("vim_bookmarks")
 
-vim.api.nvim_set_keymap("n", "ma", "<CMD>lua require('telescope').extensions.vim_bookmarks.all()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<localleader>bm", "<CMD>lua require('telescope').extensions.vim_bookmarks.current_file()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "ma", telescope.extensions.vim_bookmarks.all, silent)
+vim.keymap.set("n", "<localleader>bm", telescope.extensions.vim_bookmarks.current_file, silent)
 -- )
 
 -- )
@@ -113,12 +116,12 @@ vim.api.nvim_set_keymap("n", "<localleader>bm", "<CMD>lua require('telescope').e
 -- Trouble (
 require("trouble").setup{}
 
-vim.api.nvim_set_keymap("n", "<localleader>xx", "<CMD>Trouble<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<localleader>xw", "<CMD>Trouble workspace_diagnostics<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<localleader>xd", "<CMD>Trouble document_diagnostics<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<localleader>xl", "<CMD>Trouble loclist<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<localleader>xq", "<CMD>Trouble quickfix<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "gR", "<CMD>Trouble lsp_references<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<localleader>xx", "<cmd>Trouble<cr>", silent)
+vim.keymap.set("n", "<localleader>xw", "<cmd>Trouble workspace_diagnostics<cr>", silent)
+vim.keymap.set("n", "<localleader>xd", "<cmd>Trouble document_diagnostics<cr>", silent)
+vim.keymap.set("n", "<localleader>xl", "<cmd>Trouble loclist<cr>", silent)
+vim.keymap.set("n", "<localleader>xq", "<cmd>Trouble quickfix<cr>", silent)
+vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<cr>", silent)
 -- )
 
 -- todo-comments (
@@ -132,5 +135,5 @@ require("todo-comments").setup{
   },
 }
 
-vim.api.nvim_set_keymap("n", "<localleader>td", "<CMD>TodoTrouble<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<localleader>td", "<cmd>TodoTrouble<cr>", silent)
 -- )
