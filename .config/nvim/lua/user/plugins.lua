@@ -1,23 +1,24 @@
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
+-- vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
-call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share/nvim/plugged')
+local Plug = vim.fn['plug#']
+vim.call('plug#begin',  '$HOME/.local/share/nvim/plugged')
 
-" General {
+-- General {
   Plug 'junegunn/vim-plug'
   Plug 'machakann/vim-sandwich'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
   Plug 'junegunn/vim-easy-align'
-  if executable('ctags')
+  if vim.fn.executable('ctags') then
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'liuchengxu/vista.vim'
-  endif
+  end
   Plug 'folke/todo-comments.nvim'
   Plug 'folke/trouble.nvim'
   Plug 'kyazdani42/nvim-web-devicons'
-" }
+-- }
 
-" Editor Configuration {
+-- Editor Configuration {
   Plug 'chrisbra/matchit'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'vim-airline/vim-airline'
@@ -36,91 +37,91 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '$HOME/.local/share
   Plug 'tpope/vim-obsession'
   Plug 'karb94/neoscroll.nvim'
 
-  " Colorschemes {
+  -- Colorschemes {
     Plug 'iCyMind/NeoSolarized'
     Plug 'joshdick/onedark.vim'
     Plug 'sickill/vim-monokai'
     Plug 'fenetikm/falcon'
-  " }
+  -- }
 
-  " Syntax {
+  -- Syntax {
     Plug 'kalafut/vim-taskjuggler'
-  " }
+  -- }
 
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
   Plug 'nvim-treesitter/nvim-treesitter-context'
   Plug 'p00f/nvim-ts-rainbow'
 
-" }
+-- }
 
-" Langauge server {
+-- Langauge server {
   Plug 'williamboman/mason.nvim'
   Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'neovim/nvim-lspconfig'
 
-" }
+-- }
 
-" Files and fuzzy search {
+-- Files and fuzzy search {
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'tom-anders/telescope-vim-bookmarks.nvim'
-" }
+-- }
 
-" Tmux Interface {
+-- Tmux Interface {
   Plug 'christoomey/vim-tmux-navigator'
-" }
+-- }
 
-" General Programming {
+-- General Programming {
 
-  " Testing {
-    " NOTE: read up on these packages "
+  -- Testing {
+    -- NOTE: read up on these packages --
     Plug 'tpope/vim-dispatch'
     Plug 'radenling/vim-dispatch-neovim'
     Plug 'janko-m/vim-test'
-  " }
+  -- }
 
-  " Version Control {
+  -- Version Control {
     Plug 'tpope/vim-fugitive'
     Plug 'mhinz/vim-signify'
     Plug 'rhysd/conflict-marker.vim'
-  " }
+  -- }
 
-" }
+-- }
 
-" Snippets & AutoComplete {
-  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-  Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
-" }
+-- Snippets & AutoComplete {
+  Plug('ms-jpq/coq_nvim', {branch = 'coq'})
+  Plug('ms-jpq/coq.artifacts', {branch = 'artifacts'})
+  Plug('ms-jpq/coq.thirdparty', {branch = '3p'})
+-- }
 
-" HTML/CSS {
+-- HTML/CSS {
   Plug 'alvan/vim-closetag'
-  Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-" }
+  Plug('rrethy/vim-hexokinase', {['do'] = 'make hexokinase'})
+-- }
 
-" Misc {
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+-- Misc {
+  -- Plug('junegunn/fzf', {['do'] = { -> vim.fn['fzf#install']()}})
+  Plug'junegunn/fzf'
   Plug 'chrisbra/csv.vim'
   Plug 'kevinoid/vim-jsonc'
-  Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
-" }
+  Plug('jalvesaq/Nvim-R', {branch = 'stable'})
+-- }
 
-" LaTeX {
+-- LaTeX {
   Plug 'lervag/vimtex'
   Plug 'PatrBal/vim-textidote'
   Plug 'anufrievroman/vim-angry-reviewer'
-" }
+-- }
 
-" Writing {
+-- Writing {
   Plug 'glidenote/memolist.vim'
   Plug 'jdelkins/vim-correction'
   Plug 'rhysd/vim-grammarous'
-" }
+-- }
 
-call plug#end()
+vim.call('plug#end')
 
-runtime plugin-config.vim
+require('user.plugins.config')
 
-runtime plugin-config.lua
-runtime plugin-config-local.lua
+pcall(require, 'user.plugins.local.config')
