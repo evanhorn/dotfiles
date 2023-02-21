@@ -4,6 +4,6 @@ runtime vimrc_before
 
 lua require('user.settings')
 lua require('user.mappings')
-runtime plugins.vim
+lua require('user.plugins')
 
 runtime vimrc_after
