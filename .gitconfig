@@ -1,11 +1,16 @@
 [user]
 
     name = Eric Van Horn
-    email = ericmvanhorn7@gmail.com
+    email = eric.vanhorn@pm.me
+
+[credential "https://dev.azure.com"]
+
+    useHttpPath = true
 
 [credential]
 
-    helper = store
+    helper = /usr/local/bin/git-credential-manager
+    credentialStore = gpg
 
 [alias]
 
