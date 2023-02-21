@@ -1,21 +1,23 @@
 -- vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
 local bind = vim.keymap.set
+local silent = {silent = true}
 local remap = {remap = true}
+local silent_remap = {silent = true, remap = true}
 
 -- Wrapped lines {
   -- Make sure that movements work as expected in wrapped lines
-  bind('', '<silent> j', 'gj')
-  bind('', '<silent> k', 'gk')
-  bind('', '<silent> 0', 'g0')
-  bind('', '<silent> ^', 'g^')
-  bind('', '<silent> $', 'g$')
+  bind('', 'j', 'gj', silent)
+  bind('', 'k', 'gk', silent)
+  bind('', '0', 'g0', silent)
+  bind('', '^', 'g^', silent)
+  bind('', '$', 'g$', silent)
 
-  bind('', '<silent> gj', 'j')
-  bind('', '<silent> gk', 'k')
-  bind('', '<silent> g0', '0')
-  bind('', '<silent> g^', '^')
-  bind('', '<silent> g$', '$')
+  bind('', 'gj', 'j', silent)
+  bind('', 'gk', 'k', silent)
+  bind('', 'g0', '0', silent)
+  bind('', 'g^', '^', silent)
+  bind('', 'g$', '$', silent)
 -- }
 
 -- Creates bind('', 'pings for searching through quicklist', '{', remap)
@@ -62,7 +64,7 @@ bind('v', '. <cmd>normal', '.<CR>')
 bind('c', 'w!!', 'w !sudo tee %>/dev/null', remap)
 
 -- Easier formatting
-bind('n', '<silent> <leader>q', 'gwip')
+bind('n', '<leader>q', 'gwip', silent)
 
 -- Adjust viewports to the same size
 bind('', '<leader>=', '<C-w>=', remap)
@@ -88,7 +90,7 @@ bind('', '<leader>=', '<C-w>=', remap)
 
 -- Most prefer to toggle search highlighting rather than clear the current
 -- search results.
-bind('n', '<silent> <leader>/', '<cmd>set invhlsearch<CR>', remap)
+bind('n', '<leader>/', '<cmd>set invhlsearch<CR>', silent_remap)
 
 -- Find merge conflict markers
 bind('', '<leader>fc', '/\\v^[<\\|=>]{7}(.*\\|$)<CR>', remap)

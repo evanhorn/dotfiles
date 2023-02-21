@@ -21,35 +21,23 @@ require("lazy").setup({
   'junegunn/vim-easy-align',
   'ludovicchabant/vim-gutentags',
   'liuchengxu/vista.vim',
-  'folke/todo-comments.nvim',
-  'folke/trouble.nvim',
-  'kyazdani42/nvim-web-devicons',
+  {'folke/todo-comments.nvim', dependencies = {'nvim-lua/plenary.nvim'}},
+  {'folke/trouble.nvim', dependencies = 'nvim-tree/nvim-web-devicons'},
 -- }
 
 -- Editor Configuration {
   'chrisbra/matchit',
   'editorconfig/editorconfig-vim',
-  'vim-airline/vim-airline',
-  'vim-airline/vim-airline-themes',
+  {'vim-airline/vim-airline-themes', dependencies = {'vim-airline/vim-airline'}},
   'mbbill/undotree',
   'vim-scripts/restore_view.vim',
-  'tpope/vim-abolish',
   'gcmt/wildfire.vim',
-  'tpope/vim-speeddating',
-  'tpope/vim-unimpaired',
-  'vim-scripts/file-line',
-  'wesQ3/vim-windowswap',
   'troydm/zoomwintab.vim',
-  'kshenoy/vim-signature',
   'MattesGroeger/vim-bookmarks',
   'tpope/vim-obsession',
-  'karb94/neoscroll.nvim',
 
   -- Colorschemes {
     'iCyMind/NeoSolarized',
-    'joshdick/onedark.vim',
-    'sickill/vim-monokai',
-    'fenetikm/falcon',
   -- }
 
   -- Syntax {
@@ -57,23 +45,22 @@ require("lazy").setup({
   -- }
 
   {'nvim-treesitter/nvim-treesitter', build=':TSUpdate'},
-  'nvim-treesitter/nvim-treesitter-textobjects',
-  'nvim-treesitter/nvim-treesitter-context',
-  'p00f/nvim-ts-rainbow',
+  {'nvim-treesitter/nvim-treesitter-textobjects', dependencies = {'nvim-treesitter/nvim-treesitter'}},
+  {'nvim-treesitter/nvim-treesitter-context', dependencies = {'nvim-treesitter/nvim-treesitter'}},
 
 -- }
 
 -- Langauge server {
-  'williamboman/mason.nvim',
-  'williamboman/mason-lspconfig.nvim',
-  'neovim/nvim-lspconfig',
-
+  {'williamboman/mason-lspconfig.nvim',
+      dependencies = {'williamboman/mason.nvim', 'neovim/nvim-lspconfig'}},
 -- }
 
 -- Files and fuzzy search {
-  'nvim-lua/plenary.nvim',
-  'nvim-telescope/telescope.nvim',
-  'tom-anders/telescope-vim-bookmarks.nvim',
+  {'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = {'nvim-lua/plenary.nvim'}},
+  {'nvim-telescope/telescope-file-browser.nvim',
+      dependencies = {'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim'}},
+  {'tom-anders/telescope-vim-bookmarks.nvim',
+      dependencies = {'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim'}},
 -- }
 
 -- Tmux Interface {
@@ -84,9 +71,8 @@ require("lazy").setup({
 
   -- Testing {
     -- NOTE: read up on these packages --
-    'tpope/vim-dispatch',
     'radenling/vim-dispatch-neovim',
-    'janko-m/vim-test',
+    'vim-test/vim-test',
   -- }
 
   -- Version Control {
@@ -98,9 +84,9 @@ require("lazy").setup({
 -- }
 
 -- Snippets & AutoComplete {
-  {'ms-jpq/coq_nvim', branch='coq', build=':COQdeps'},
-  {'ms-jpq/coq.artifacts', branch='artifacts'},
-  {'ms-jpq/coq.thirdparty', branch='3p'},
+  {'ms-jpq/coq_nvim', branch='coq', build=':COQdeps', lazy=false},
+  {'ms-jpq/coq.artifacts', branch='artifacts', dependencies = {'ms-jpq/coq_nvim'}, lazy=false},
+  {'ms-jpq/coq.thirdparty', branch='3p', dependencies = {'ms-jpq/coq_nvim'}, lazy=false},
 -- }
 
 -- HTML/CSS {
@@ -112,7 +98,7 @@ require("lazy").setup({
   {'junegunn/fzf', build=':call fzf#install()'},
   'chrisbra/csv.vim',
   'kevinoid/vim-jsonc',
-  {'jalvesaq/Nvim-R', branch = 'stable'},
+  {'jalvesaq/Nvim-R', branch='stable'},
 -- }
 
 -- LaTeX {
@@ -122,7 +108,6 @@ require("lazy").setup({
 -- }
 
 -- Writing {
-  'glidenote/memolist.vim',
   'jdelkins/vim-correction',
   'rhysd/vim-grammarous',
 -- }
