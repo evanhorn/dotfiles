@@ -26,13 +26,13 @@ local remap = {remap = true}
 -- Editing Tools {
 
   -- undotree {
-    bind('n', ' <leader>u', '<cmd>UndotreeToggle<CR>')
+    bind('n', '<leader>u', '<cmd>UndotreeToggle<CR>')
     -- If undotree is opened, it is likely one wants to interact with it.
     vim.g.undotree_SetFocusWhenToggle = 1
   -- }
 
   -- vim-easy-align {
-    bind({'x', 'n'}, ' ga', '<Plug>(EasyAlign)', remap)
+    bind({'x', 'n'}, 'ga', '<Plug>(EasyAlign)', remap)
   -- }
 
   -- vim-tmux {
