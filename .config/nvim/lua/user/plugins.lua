@@ -1,5 +1,9 @@
 -- vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
+pcall(require, 'user.plugins.local.before')
+
+require('user.plugins.before')
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -84,9 +88,9 @@ require("lazy").setup({
 -- }
 
 -- Snippets & AutoComplete {
-  {'ms-jpq/coq_nvim', branch='coq', build=':COQdeps', lazy=false},
-  {'ms-jpq/coq.artifacts', branch='artifacts', dependencies = {'ms-jpq/coq_nvim'}, lazy=false},
-  {'ms-jpq/coq.thirdparty', branch='3p', dependencies = {'ms-jpq/coq_nvim'}, lazy=false},
+  {'ms-jpq/coq_nvim', branch='coq', build=':COQdeps'},
+  {'ms-jpq/coq.artifacts', branch='artifacts', dependencies = {'ms-jpq/coq_nvim'}},
+  {'ms-jpq/coq.thirdparty', branch='3p', dependencies = {'ms-jpq/coq_nvim'}},
 -- }
 
 -- HTML/CSS {
@@ -113,6 +117,6 @@ require("lazy").setup({
 -- }
 })
 
-require('user.plugins.config')
+require('user.plugins.after')
 
-pcall(require, 'user.plugins.local.config')
+pcall(require, 'user.plugins.local.after')
