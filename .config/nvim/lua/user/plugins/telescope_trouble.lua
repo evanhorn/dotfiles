@@ -1,4 +1,4 @@
--- vim: set foldmarker=(,) foldlevel=0 foldmethod=marker:
+-- vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
 
 -- First things first, can't stand default error signs (
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
