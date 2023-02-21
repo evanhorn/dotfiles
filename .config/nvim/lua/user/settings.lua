@@ -1,4 +1,4 @@
--- vim: set foldmarker=(,) foldlevel=0 foldmethod=marker spell:
+-- vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
 -- neovim virtualenv executable
 vim.g.python3_host_prog = vim.fn.expand("$HOME/.virtualenvs/neovim/bin/python")

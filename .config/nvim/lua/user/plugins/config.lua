@@ -1,4 +1,4 @@
--- vim: set foldmarker=(,) foldlevel=0 foldmethod=marker:
+-- vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
 
 require('user.plugins.writing')
 require('user.plugins.editor')
