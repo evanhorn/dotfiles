@@ -1,5 +1,5 @@
 # use POWERLINE
-export POWERLINE_PATH="$HOME/.local/pipx/venvs/powerline-status/lib/python3.8/site-packages/powerline"
+export POWERLINE_PATH="$HOME/.local/pipx/venvs/powerline-status/lib/python3.10/site-packages/powerline"
 
 if [ -f $HOME/.local/bin/powerline-daemon ]; then
   $HOME/.local/bin/powerline-daemon -q
