@@ -13,6 +13,7 @@ local bind = vim.keymap.set
   vim.g.vimtex_view_method = 'zathura'
   vim.g.vimtex_fold_enabled = 1
   vim.g.vimtex_quickfix_mode = 0
+  vim.g.vimtex_doc_handlers = 'vimtex#doc#handlers#texdoc'
   vim.g.vimtex_grammar_textidote = {
         jar = '/opt/textidote/textidote.jar',
         }
