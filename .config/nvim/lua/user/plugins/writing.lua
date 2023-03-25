@@ -38,9 +38,3 @@ vim.g.textidote_jar = '/opt/textidote/textidote.jar'
 bind('n', '<localleader>ar', ':AngryReviewer<cr>')
 vim.g.AngryReviewerEnglish = 'american'
 -- }
-
--- memolist {
-  bind('n', '<localleader>mn', '<cmd>MemoNew<CR>')
-  bind('n', '<localleader>ml', '<cmd>MemoList<CR>')
-  bind('n', '<localleader>mg', '<cmd>MemoGrep<CR>')
--- }

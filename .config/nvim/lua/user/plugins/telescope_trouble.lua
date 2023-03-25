@@ -70,45 +70,46 @@ telescope.setup{
 local builtin = require('telescope.builtin')
 local silent = {silent = true}
 
+local bind = vim.keymap.set
 -- File Pickers(
-vim.keymap.set("n", "-", telescope.extensions.file_browser.file_browser, silent)
-vim.keymap.set("n", "<localleader>ff", builtin.find_files, silent)
-vim.keymap.set("n", "<localleader>fg", builtin.live_grep, silent)
-vim.keymap.set("n", "<localleader>fb", builtin.buffers, silent)
-vim.keymap.set("n", "<localleader>gr", builtin.grep_string, silent)
+bind("n", "-", telescope.extensions.file_browser.file_browser, silent)
+bind("n", "<localleader>ff", builtin.find_files, silent)
+bind("n", "<localleader>fg", builtin.live_grep, silent)
+bind("n", "<localleader>fb", builtin.buffers, silent)
+bind("n", "<localleader>gr", builtin.grep_string, silent)
 -- )
 
 -- VIM Pickers(
-vim.keymap.set("n", "<localleader>fb", builtin.buffers, silent)
-vim.keymap.set("n", "<localleader>hs", builtin.command_history, silent)
-vim.keymap.set("n", "<localleader>h", builtin.help_tags, silent)
-vim.keymap.set("n", "<localleader>m", builtin.marks, silent)
-vim.keymap.set("n", "<localleader>qf", builtin.quickfix, silent)
-vim.keymap.set("n", "<localleader>j", builtin.jumplist, silent)
-vim.keymap.set("n", "<localleader>o", builtin.vim_options, silent)
-vim.keymap.set("n", "<localleader>r", builtin.registers, silent)
-vim.keymap.set("n", "z=", builtin.spell_suggest, silent)
-vim.keymap.set("n", "<localleader>k", builtin.keymaps, silent)
+bind("n", "<localleader>fb", builtin.buffers, silent)
+bind("n", "<localleader>hs", builtin.command_history, silent)
+bind("n", "<localleader>h", builtin.help_tags, silent)
+bind("n", "<localleader>m", builtin.marks, silent)
+bind("n", "<localleader>qf", builtin.quickfix, silent)
+bind("n", "<localleader>j", builtin.jumplist, silent)
+bind("n", "<localleader>o", builtin.vim_options, silent)
+bind("n", "<localleader>r", builtin.registers, silent)
+bind("n", "z=", builtin.spell_suggest, silent)
+bind("n", "<localleader>k", builtin.keymaps, silent)
 -- )
 
 -- Neovim LSP Pickers (
-vim.keymap.set("n", "<localleader>sd", builtin.lsp_document_symbols, silent)
-vim.keymap.set("n", "<localleader>sw", builtin.lsp_dynamic_workspace_symbols, silent)
+bind("n", "<localleader>sd", builtin.lsp_document_symbols, silent)
+bind("n", "<localleader>sw", builtin.lsp_dynamic_workspace_symbols, silent)
 -- )
 
 -- Git Pickers (
-vim.keymap.set("n", "<localleader>ci", builtin.git_commits, silent)
-vim.keymap.set("n", "<localleader>bci", builtin.git_bcommits, silent)
-vim.keymap.set("n", "<localleader>br", builtin.git_branches, silent)
-vim.keymap.set("n", "<localleader>gs", builtin.git_status, silent)
-vim.keymap.set("n", "<localleader>st", builtin.git_stash, silent)
+bind("n", "<localleader>ci", builtin.git_commits, silent)
+bind("n", "<localleader>bci", builtin.git_bcommits, silent)
+bind("n", "<localleader>br", builtin.git_branches, silent)
+bind("n", "<localleader>gs", builtin.git_status, silent)
+bind("n", "<localleader>st", builtin.git_stash, silent)
 -- )
 
 -- Extensions (
 telescope.load_extension("vim_bookmarks")
 
-vim.keymap.set("n", "ma", telescope.extensions.vim_bookmarks.all, silent)
-vim.keymap.set("n", "<localleader>bm", telescope.extensions.vim_bookmarks.current_file, silent)
+bind("n", "ma", telescope.extensions.vim_bookmarks.all, silent)
+bind("n", "<localleader>bm", telescope.extensions.vim_bookmarks.current_file, silent)
 -- )
 
 -- )
@@ -116,12 +117,12 @@ vim.keymap.set("n", "<localleader>bm", telescope.extensions.vim_bookmarks.curren
 -- Trouble (
 require("trouble").setup{}
 
-vim.keymap.set("n", "<localleader>xx", "<cmd>Trouble<cr>", silent)
-vim.keymap.set("n", "<localleader>xw", "<cmd>Trouble workspace_diagnostics<cr>", silent)
-vim.keymap.set("n", "<localleader>xd", "<cmd>Trouble document_diagnostics<cr>", silent)
-vim.keymap.set("n", "<localleader>xl", "<cmd>Trouble loclist<cr>", silent)
-vim.keymap.set("n", "<localleader>xq", "<cmd>Trouble quickfix<cr>", silent)
-vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<cr>", silent)
+bind("n", "<localleader>xx", "<cmd>Trouble<cr>", silent)
+bind("n", "<localleader>xw", "<cmd>Trouble workspace_diagnostics<cr>", silent)
+bind("n", "<localleader>xd", "<cmd>Trouble document_diagnostics<cr>", silent)
+bind("n", "<localleader>xl", "<cmd>Trouble loclist<cr>", silent)
+bind("n", "<localleader>xq", "<cmd>Trouble quickfix<cr>", silent)
+bind("n", "gR", "<cmd>Trouble lsp_references<cr>", silent)
 -- )
 
 -- todo-comments (
@@ -135,5 +136,5 @@ require("todo-comments").setup{
   },
 }
 
-vim.keymap.set("n", "<localleader>td", "<cmd>TodoTrouble<cr>", silent)
+bind("n", "<localleader>td", "<cmd>TodoTrouble<cr>", silent)
 -- )

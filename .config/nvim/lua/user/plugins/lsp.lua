@@ -70,6 +70,7 @@ require("mason-lspconfig").setup{
   automatic_installation = true,
 }
 
+local bind = vim.keymap.set
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
@@ -79,21 +80,21 @@ local on_attach = function(_, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = {silent = true, buffer=bufnr}
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
+  bind('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  bind('n', 'gd', vim.lsp.buf.definition, bufopts)
+  bind('n', 'K', vim.lsp.buf.hover, bufopts)
+  bind('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  bind('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  bind('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  bind('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  bind('n', '<space>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  bind('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  bind('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  bind('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  bind('n', 'gr', vim.lsp.buf.references, bufopts)
+  bind('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
 
