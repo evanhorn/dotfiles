@@ -38,6 +38,7 @@ require("lazy").setup({
   'gcmt/wildfire.vim',
   'troydm/zoomwintab.vim',
   'MattesGroeger/vim-bookmarks',
+  'tpope/vim-unimpaired',
   'tpope/vim-obsession',
 
   -- Colorschemes {
