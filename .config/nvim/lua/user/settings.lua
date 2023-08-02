@@ -24,8 +24,6 @@ set.signcolumn = 'number'
 
 set.wildmode = {'list:longest', 'full'} -- Command <Tab> completion, list matches, then longest common part, then all.
 
-set.pastetoggle = '<F12>'
-
 set.cursorline = true                   -- Highlight current line
 set.termguicolors = true
 
