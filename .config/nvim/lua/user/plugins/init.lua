@@ -32,7 +32,7 @@ require("lazy").setup({
 -- Editor Configuration {
   'chrisbra/matchit',
   'editorconfig/editorconfig-vim',
-  {'vim-airline/vim-airline-themes', dependencies = {'vim-airline/vim-airline'}},
+  {'nvim-lualine/lualine.nvim', dependencies = {'nvim-tree/nvim-web-devicons'}},
   'mbbill/undotree',
   'vim-scripts/restore_view.vim',
   'gcmt/wildfire.vim',
