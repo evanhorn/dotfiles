@@ -42,7 +42,7 @@ require("lazy").setup({
   'tpope/vim-obsession',
 
   -- Colorschemes {
-    'iCyMind/NeoSolarized',
+    'rrethy/nvim-base16',
   -- }
 
   -- Syntax {

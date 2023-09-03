@@ -18,7 +18,7 @@ vim.g['airline#extensions#tabline#show_buffers'] = 1
 vim.g['airline#extensions#tabline#tab_nr_type'] = 0 -- # of splits (default)
 -- vim.g['airline#extensions#tabline#tab_nr_type'] = 1 -- tab number
 
-vim.g.airline_theme = 'solarized'
+vim.g.airline_theme = 'base16'
 
 if not vim.fn.exists('g:airline_powerline_fonts') then
   -- Use the default set of separators with a few customizations
