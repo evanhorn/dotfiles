@@ -1,10 +1,9 @@
 -- vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
-pcall(require, 'custom.before')
-
 require('user.settings')
 require('user.mappings')
 
+pcall(require, 'custom.before')
 require('user.before')
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -76,7 +75,20 @@ require("lazy").setup({
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      { 'williamboman/mason.nvim', config = true},
+      {
+        'williamboman/mason.nvim',
+        config = function()
+          require("mason").setup{
+            ui = {
+              icons = {
+                package_installed = "✓",
+                package_pending = "➜",
+                package_uninstalled = "✗"
+              }
+            }
+          }
+        end,
+      },
       'williamboman/mason-lspconfig.nvim',
       }
     },
@@ -167,7 +179,6 @@ require("lazy").setup({
 }, {})
 
 require('user.after')
-
 pcall(require, 'custom.after')
 
 vim.cmd [[

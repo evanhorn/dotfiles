@@ -7,17 +7,14 @@ local silent_remap = {silent = true, remap = true}
 
 -- Wrapped lines {
   -- Make sure that movements work as expected in wrapped lines
-  bind('', 'j', 'gj', silent)
-  bind('', 'k', 'gk', silent)
-  bind('', '0', 'g0', silent)
-  bind('', '^', 'g^', silent)
-  bind('', '$', 'g$', silent)
+  bind({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
-  bind('', 'gj', 'j', silent)
-  bind('', 'gk', 'k', silent)
-  bind('', 'g0', '0', silent)
-  bind('', 'g^', '^', silent)
-  bind('', 'g$', '$', silent)
+-- Remap for dealing with word wrap
+  bind('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+  bind('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+  bind('n', '0', "v:count == 0 ? 'g0' : '0'", { expr = true, silent = true })
+  bind('n', '^', "v:count == 0 ? 'g^' : '^'", { expr = true, silent = true })
+  bind('n', '$', "v:count == 0 ? 'g$' : '$'", { expr = true, silent = true })
 -- }
 
 -- Creates bind('', 'pings for searching through quicklist', '{', remap)

@@ -1,6 +1,6 @@
 -- vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
--- treesitter {
+-- Treesitter {
 require("nvim-treesitter.configs").setup{
   ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
@@ -14,26 +14,44 @@ require("nvim-treesitter.configs").setup{
       enable = true,
       lookahead = true,
       keymaps = {
-        --   -- f keymaps are for key-values
-        --   ["af"] = "@function.outer",
-        --   ["if"] = "@function.inner",
-        --   -- c keymaps are for dictionaries
-        --   ["ac"] = "@class.outer",
-        --   ["ic"] = "@class.inner",
-        --   -- k keymaps are for comments
-        --   ["ak"] = "@comment.outer",
-        --   ["ik"] = "@comment.inner",
+          ["aa"] = "@parameter.outer",
+          ["ia"] = "@parameter.inner",
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
+          ["ak"] = "@comment.outer",
+          ["ik"] = "@comment.inner",
       },
     },
     move = {
       enable = true,
       set_jumps = true,
-      -- Granular control over motions on key-values and dictionaries
-      -- if you want it
+      goto_next_start = {
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
+      },
+      goto_next_end = {
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
+      },
+      goto_previous_start = {
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
+      },
+      goto_previous_end = {
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
+      },
     },
     swap = {
       enable = true,
-      -- Swap parameters; ie. if a key-value has multiple values and you want to swap them
+      swap_next = {
+        ['<leader>a'] = '@parameter.inner',
+      },
+      swap_previous = {
+        ['<leader>A'] = '@parameter.inner',
+      },
     },
   },
   textsubjects = {
@@ -64,17 +82,7 @@ require("treesitter-context").setup{
 -- )
 -- }
 
--- lsp {
-
-require("mason").setup{
-  ui = {
-    icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗"
-    }
-  }
-}
+-- LSP {
 
 --Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -131,43 +139,59 @@ local servers = {
   yamlls = {},
 }
 
-require("mason-lspconfig").setup{
+local mason_lspconfig = require("mason-lspconfig")
+
+mason_lspconfig.setup{
   ensure_installed = servers,
   automatic_installation = true,
 }
 
-local bind = vim.keymap.set
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
+
+local builtin = require('telescope.builtin')
+
 local on_attach = function(_, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  local nmap = function(keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = {silent = true, buffer=bufnr}
-  bind('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  bind('n', 'gd', vim.lsp.buf.definition, bufopts)
-  bind('n', 'K', vim.lsp.buf.hover, bufopts)
-  bind('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  bind('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  bind('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  bind('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  bind('n', '<space>wl', function()
+  nmap('<space>rn', vim.lsp.buf.rename, '[R]e[N]ame')
+  nmap('<space>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+  -- nmap('gD', vim.lsp.buf.declaration, bufopts)
+  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gr', builtin.lsp_references, '[G]oto [R]eference')
+  nmap('gI', builtin.lsp_implementation,  '[G]oto [R]eference')
+  nmap('<space>D', vim.lsp.buf.type_definition, '[T]ype [D]efinition')
+  nmap("<localleader>ds", builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap("<localleader>ws", builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+  -- See `:help K` for why this keymap
+  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+  -- Lesser used LSP functionality
+  nmap('gD', vim.lsp.buf.declaration,  '[G]oto [D]eclaration')
+  nmap('<space>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  nmap('<space>wr', vim.lsp.buf.remove_workspace_folder,  '[W]orkspace [R]emove Folder')
+  nmap('<space>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  bind('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  bind('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  bind('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  bind('n', 'gr', vim.lsp.buf.references, bufopts)
-  bind('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  end, '[W]orkspace [L]ist Folders')
+
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format()
+  end, { desc = 'Format current buffer with LSP' })
 end
 
-
-local lsp_flags = {
-  -- This is the default in Nvim 0.7+
-  debounce_text_changes = 150,
-}
 
 local lspconfig = require('lspconfig')
 local coq = require('coq')
@@ -190,7 +214,7 @@ require("coq_3p") {
 }
 -- }
 
--- telescope & trouble {
+-- Telescope & Trouble {
 
 -- First things first, can't stand default error signs (
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -229,6 +253,12 @@ end
 
 telescope.setup{
   defaults = {
+    mappings = {
+      i = {
+        ['<C-u>'] = false,
+        ['<C-d>'] = false,
+      },
+    },
     vimgrep_arguments = {
       "rg",
       "--color=never",
@@ -250,7 +280,7 @@ telescope.setup{
             local dir = vim.fn.fnamemodify(selection.path, ":p:h")
             telescope.close(prompt_bufnr)
             -- Depending on what you want put `cd`, `lcd`, `tcd`
-            vim.cmd(string.format("silent lcd %s", dir))
+            vim.cmd(string.format("{ silent = true } lcd %s", dir))
           end
         }
       },
@@ -259,49 +289,40 @@ telescope.setup{
   },
 }
 
-local builtin = require('telescope.builtin')
-local silent = {silent = true}
-
 local bind = vim.keymap.set
--- File Pickers(
-bind("n", "-", telescope.extensions.file_browser.file_browser, silent)
-bind("n", "<localleader>ff", builtin.find_files, silent)
-bind("n", "<localleader>fg", builtin.live_grep, silent)
-bind("n", "<localleader>fb", builtin.buffers, silent)
-bind("n", "<localleader>gr", builtin.grep_string, silent)
--- )
 
--- VIM Pickers(
-bind("n", "<localleader>fb", builtin.buffers, silent)
-bind("n", "<localleader>hs", builtin.command_history, silent)
-bind("n", "<localleader>h", builtin.help_tags, silent)
-bind("n", "<localleader>m", builtin.marks, silent)
-bind("n", "<localleader>qf", builtin.quickfix, silent)
-bind("n", "<localleader>j", builtin.jumplist, silent)
-bind("n", "<localleader>o", builtin.vim_options, silent)
-bind("n", "<localleader>r", builtin.registers, silent)
-bind("n", "z=", builtin.spell_suggest, silent)
-bind("n", "<localleader>k", builtin.keymaps, silent)
--- )
+bind("n", "-", telescope.extensions.file_browser.file_browser, { silent = true })
+bind('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
+bind('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+bind('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+bind('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+bind('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+bind('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+bind('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]resume' })
 
--- Neovim LSP Pickers (
-bind("n", "<localleader>sd", builtin.lsp_document_symbols, silent)
-bind("n", "<localleader>sw", builtin.lsp_dynamic_workspace_symbols, silent)
--- )
+bind("n", "<localleader>sb", builtin.buffers, { desc = '[S]earch [B]uffers' })
+bind("n", "<localleader>sh", builtin.command_history, { desc = '[S]earch [H]istory' })
+bind("n", "<localleader>sm", builtin.marks, { desc = '[S]earch [M]arks' })
+bind("n", "<localleader>qf", builtin.quickfix, { desc = 'Search [Q]uick [F]ix' })
+bind("n", "<localleader>sj", builtin.jumplist, { desc = '[S]earch [J]umplist' })
+bind("n", "<localleader>so", builtin.vim_options, { desc = '[S]earch vim[O]ptions' })
+bind("n", "<localleader>sr", builtin.registers, { desc = '[S]earch [R]egisters' })
+bind("n", "z=", builtin.spell_suggest, { desc = 'Spelling Suggestions' })
+bind("n", "<localleader>sk", builtin.keymaps, { desc = '[S]earch [K]eymaps' })
 
--- Git Pickers (
-bind("n", "<localleader>ci", builtin.git_commits, silent)
-bind("n", "<localleader>bci", builtin.git_bcommits, silent)
-bind("n", "<localleader>br", builtin.git_branches, silent)
-bind("n", "<localleader>gs", builtin.git_status, silent)
-bind("n", "<localleader>st", builtin.git_stash, silent)
--- )
+-- -- Git Pickers (
+-- bind("n", "<localleader>ci", builtin.git_commits, { silent = true })
+-- bind("n", "<localleader>bci", builtin.git_bcommits, { silent = true })
+-- bind("n", "<localleader>br", builtin.git_branches, { silent = true })
+-- bind("n", "<localleader>gs", builtin.git_status, { silent = true })
+-- bind("n", "<localleader>st", builtin.git_stash, { silent = true })
+-- -- )
 
 -- Extensions (
 telescope.load_extension("vim_bookmarks")
 
-bind("n", "ma", telescope.extensions.vim_bookmarks.all, silent)
-bind("n", "<localleader>bm", telescope.extensions.vim_bookmarks.current_file, silent)
+bind("n", "ma", telescope.extensions.vim_bookmarks.all, { desc = 'Book[M][A]rks' })
+bind("n", "<localleader>bm", telescope.extensions.vim_bookmarks.current_file, { desc = 'Current File [B]ook[M]arks' })
 -- )
 
 -- )
@@ -309,13 +330,13 @@ bind("n", "<localleader>bm", telescope.extensions.vim_bookmarks.current_file, si
 -- Trouble (
 require("trouble").setup{}
 
-bind("n", "<localleader>xx", "<cmd>Trouble<cr>", silent)
-bind("n", "<localleader>xw", "<cmd>Trouble workspace_diagnostics<cr>", silent)
-bind("n", "<localleader>xd", "<cmd>Trouble document_diagnostics<cr>", silent)
-bind("n", "<localleader>xl", "<cmd>Trouble loclist<cr>", silent)
-bind("n", "<localleader>xq", "<cmd>Trouble quickfix<cr>", silent)
-bind("n", "gR", "<cmd>Trouble lsp_references<cr>", silent)
--- )
+bind("n", "<localleader>xx", "<cmd>Trouble<cr>", { desc = 'Trouble Diagnostics' })
+bind("n", "<localleader>xw", "<cmd>Trouble workspace_diagnostics<cr>", { desc = 'Trouble Workspace Diagnostics' })
+bind("n", "<localleader>xd", "<cmd>Trouble document_diagnostics<cr>", { desc = 'Trouble Document Diagnostics' })
+bind("n", "<localleader>xl", "<cmd>Trouble loclist<cr>", { desc = 'Trouble Location List' })
+bind("n", "<localleader>xq", "<cmd>Trouble quickfix<cr>", { desc = 'Trouble Quick Fix' })
+bind("n", "gR", "<cmd>Trouble lsp_references<cr>", { desc = 'Trouble LSP References' })
+-- -- )
 
 -- todo-comments (
 require("todo-comments").setup{
@@ -328,6 +349,6 @@ require("todo-comments").setup{
   },
 }
 
-bind("n", "<localleader>td", "<cmd>TodoTrouble<cr>", silent)
+bind("n", "<localleader>td", "<cmd>TodoTrouble<cr>", { silent = true })
 -- )
 -- }

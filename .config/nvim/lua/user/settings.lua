@@ -3,64 +3,49 @@
 -- neovim virtualenv executable
 vim.g.python3_host_prog = vim.fn.expand("$HOME/.virtualenvs/neovim/bin/python")
 
-local set = vim.opt
-
-set.background = 'dark'                 -- Assume a dark background
-
 vim.g.mapleader = ','
 vim.g.maplocalleader = ';'
 
-vim.cmd [[filetype plugin indent on]]   -- Automatically detect file types.
-
-set.cmdheight = 2                       -- Give more space for displaying messages.
-
 -- Having longer update time (default is 4000 ms = 4 s) leads to noticeable
 -- delays and poor user experience.
-set.updatetime = 100
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300
 
--- Always show the signcolumn, otherwise it would shift the text each time
--- diagnostics appear/become resolved.
-set.signcolumn = 'number'
+vim.wo.number = true                     -- Line numbers on
+vim.wo.signcolumn = 'yes'
 
-set.wildmode = {'list:longest', 'full'} -- Command <Tab> completion, list matches, then longest common part, then all.
+vim.o.clipboard = 'unnamedplus'
 
-set.cursorline = true                   -- Highlight current line
-set.termguicolors = true
+vim.opt.wildmode = {'list:longest', 'full'} -- Command <Tab> completion, list matches, then longest common part, then all.
 
-set.showmatch = true                    -- Show matching brackets/parenthesis
+vim.o.cursorline = true                   -- Highlight current line
+vim.o.termguicolors = true
 
-set.whichwrap = 'b,s,h,l,<,>,[,]'      -- Backspace and cursor keys wrap too
+vim.o.breakindent = true
+vim.o.showmatch = true                    -- Show matching brackets/parenthesis
+vim.o.whichwrap = 'b,s,h,l,<,>,[,]'       -- Backspace and cursor keys wrap too
 
-set.shortmess:append('mrc')             -- Abbrev. of messages (avoids 'hit enter')
-set.virtualedit = 'onemore'             -- Allow for cursor beyond last character
+vim.opt.shortmess:append('mrc')           -- Abbrev. of messages (avoids 'hit enter')
+vim.o.virtualedit = 'onemore'             -- Allow for cursor beyond last character
+vim.o.completeopt = 'menuone,noselect'    -- Set completeopt to have a better completion experience
 
-set.conceallevel = 2
+vim.o.conceallevel = 2
 --
 -- Split below by default
-set.splitbelow = true
+vim.o.splitbelow = true
 -- Split right by default
-set.splitright = true
-
-if vim.fn.executable('nvr') then
-  vim.env.VISUAL = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-end
-
-vim.cmd [[highlight! link TermCursor Cursor]]
-vim.cmd [[highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15]]
+vim.o.splitright = true
 
 -- Search (
-  set.ignorecase = true                 -- Case insensitive search
-  set.smartcase = true                  -- Case sensitive when uc present
-  set.number = true                     -- Line numbers on
-  -- set.path:append('app/**')             -- Add all subdirectories to search
+  vim.o.ignorecase = true                 -- Case insensitive search
+  vim.o.smartcase = true                  -- Case sensitive when uc present
 -- )
 
 -- Formatting (
-  set.wrap = false                      -- Do not wrap long lines
-  set.scrolljump = 5                    -- Lines to scroll when cursor leaves screen
-  set.scrolloff = 3                     -- Minimum lines to keep above and below cursor
-  set.list = true
-  set.listchars = {                     -- Highlight problematic whitespace
+  vim.o.wrap = false                      -- Do not wrap long lines
+  vim.o.scrolloff = 3                     -- Minimum lines to keep above and below cursor
+  vim.o.list = true
+  vim.opt.listchars = {                     -- Highlight problematic whitespace
     tab = '›\\ ',
     trail = '•',
     extends = '#',
@@ -68,20 +53,19 @@ vim.cmd [[highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15]]
   }
   --)
 
--- Cliboard settings (
-if vim.fn.has('clipboard') then
-  set.clipboard = 'unnamed'
-  if vim.fn.has('unnamedplus') then     -- When possible use + register for copy-paste
-      set.clipboard:append('unnamedplus')
-  end
-end
+-- Backup and undo files (
+vim.o.backup = true                     -- Backups are nice ...
+vim.o.backupdir = vim.fn.expand("$HOME/.local/state/nvim/backup/")
+vim.o.undofile = true
 -- )
 
--- Backup and undo files (
-  set.backup = true                     -- Backups are nice ...
-  set.backupdir = vim.fn.expand("$HOME/.local/state/nvim/backup/")
-  vim.cmd [[set backupdir=$HOME/.local/state/nvim/backup/]]
-  if vim.fn.has('persistent_undo') then
-    set.undofile = true
-  end
--- )
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
