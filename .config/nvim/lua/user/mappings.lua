@@ -97,3 +97,17 @@ bind('i', 'jk', '<ESC>', { desc = 'Alternate escape' } )
   bind('t', 'jk', '<C-\\><C-n>', { desc = 'Terminal Escape' })
   bind('t', '<C-v><Esc>', '<Esc>', { desc = 'Terminal Escape' })
 -- }
+
+IsTransparent = false
+
+function ToggleTransparent()
+  if IsTransparent then
+    vim.o.background = 'dark'
+    IsTransparent = false
+  else
+    vim.cmd([[ hi Normal guibg=none ctermbg=none ]])
+    IsTransparent = true
+  end
+end
+
+bind('n', '<localleader>tr', ToggleTransparent, { desc = 'Toggle Transparency' })
