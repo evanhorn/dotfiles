@@ -65,7 +65,7 @@ require("nvim-treesitter.configs").setup{
   },
 }
 
--- Context display for long dictionaries and key-value entries (
+-- Context display for long dictionaries and key-value entries {
 require("treesitter-context").setup{
   throttle = true,
   patterns = {
@@ -79,7 +79,8 @@ require("treesitter-context").setup{
   -- Make sure foam is treated with exact Lua patterns
   exact_patterns = { foam = true, }
 }
--- )
+-- }
+
 -- }
 
 -- LSP {
@@ -112,7 +113,7 @@ local servers = {
   html = {},
   jsonls = {},
   jedi_language_server = {},
-  pyright = {},
+  -- pyright = {},
   pylsp = {
     pylsp = {
       configurationSources = { "flake8", "mypy" },
@@ -166,10 +167,9 @@ local on_attach = function(_, bufnr)
   nmap('<space>rn', vim.lsp.buf.rename, '[R]e[N]ame')
   nmap('<space>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  -- nmap('gD', vim.lsp.buf.declaration, bufopts)
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', builtin.lsp_references, '[G]oto [R]eference')
-  nmap('gI', builtin.lsp_implementation,  '[G]oto [R]eference')
+  nmap('gI', builtin.lsp_implementations,  '[G]oto [I]mplementation')
   nmap('<space>D', vim.lsp.buf.type_definition, '[T]ype [D]efinition')
   nmap("<localleader>ds", builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap("<localleader>ws", builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -197,10 +197,9 @@ local lspconfig = require('lspconfig')
 local coq = require('coq')
 for server, settings in pairs(servers) do
   lspconfig[server].setup{coq.lsp_ensure_capabilities{
-    on_attach = on_attach,
     capabilities = capabilities,
-    flags = lsp_flags,
   },
+  on_attach = on_attach,
   settings = settings,
 }
 end
@@ -216,18 +215,18 @@ require("coq_3p") {
 
 -- Telescope & Trouble {
 
--- First things first, can't stand default error signs (
+-- First things first, can't stand default error signs {
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
--- )
+-- }
 
--- Telescope (
+-- Telescope {
 local telescope = require("telescope")
 
--- Don't preview binaries (
+-- Don't preview binaries {
 -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#dont-preview-binaries
 local new_maker = function(filepath, bufnr, opts)
   filepath = vim.fn.expand(filepath)
@@ -247,7 +246,7 @@ local new_maker = function(filepath, bufnr, opts)
     end
   }):sync()
 end
--- )
+-- }
 
 -- local trouble = require("trouble.providers.telescope")
 
@@ -292,42 +291,42 @@ telescope.setup{
 local bind = vim.keymap.set
 
 bind("n", "-", telescope.extensions.file_browser.file_browser, { silent = true })
-bind('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
-bind('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-bind('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+bind('n', '<leader>gf', builtin.git_files, { desc = '[G]it [F]iles' })
+bind('n', '<leader>ff', builtin.find_files, { desc = '[S]earch [F]iles' })
+bind('n', '<leader>h', builtin.help_tags, { desc = '[S]earch [H]elp' })
 bind('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-bind('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-bind('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-bind('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]resume' })
+bind('n', '<leader>g', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+bind('n', '<leader>d', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+bind('n', '<leader>r', builtin.resume, { desc = '[S]earch [R]resume' })
 
-bind("n", "<localleader>sb", builtin.buffers, { desc = '[S]earch [B]uffers' })
-bind("n", "<localleader>sh", builtin.command_history, { desc = '[S]earch [H]istory' })
-bind("n", "<localleader>sm", builtin.marks, { desc = '[S]earch [M]arks' })
-bind("n", "<localleader>qf", builtin.quickfix, { desc = 'Search [Q]uick [F]ix' })
-bind("n", "<localleader>sj", builtin.jumplist, { desc = '[S]earch [J]umplist' })
-bind("n", "<localleader>so", builtin.vim_options, { desc = '[S]earch vim[O]ptions' })
-bind("n", "<localleader>sr", builtin.registers, { desc = '[S]earch [R]egisters' })
+bind("n", "<localleader>b", builtin.buffers, { desc = '[S]earch [B]uffers' })
+bind("n", "<localleader>h", builtin.command_history, { desc = '[S]earch [H]istory' })
+bind("n", "<localleader>m", builtin.marks, { desc = '[S]earch [M]arks' })
+bind("n", "<localleader>q", builtin.quickfix, { desc = 'Search [Q]uick [F]ix' })
+bind("n", "<localleader>j", builtin.jumplist, { desc = '[J]umplist' })
+bind("n", "<localleader>o", builtin.vim_options, { desc = 'vim[O]ptions' })
+bind("n", "<localleader>r", builtin.registers, { desc = '[S]earch [R]egisters' })
 bind("n", "z=", builtin.spell_suggest, { desc = 'Spelling Suggestions' })
-bind("n", "<localleader>sk", builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+bind("n", "<localleader>k", builtin.keymaps, { desc = 'Search [K]ey[M]aps' })
 
--- -- Git Pickers (
+-- -- Git Pickers {
 -- bind("n", "<localleader>ci", builtin.git_commits, { silent = true })
 -- bind("n", "<localleader>bci", builtin.git_bcommits, { silent = true })
 -- bind("n", "<localleader>br", builtin.git_branches, { silent = true })
 -- bind("n", "<localleader>gs", builtin.git_status, { silent = true })
 -- bind("n", "<localleader>st", builtin.git_stash, { silent = true })
--- -- )
+-- -- }
 
--- Extensions (
+-- Extensions {
 telescope.load_extension("vim_bookmarks")
 
 bind("n", "ma", telescope.extensions.vim_bookmarks.all, { desc = 'Book[M][A]rks' })
 bind("n", "<localleader>bm", telescope.extensions.vim_bookmarks.current_file, { desc = 'Current File [B]ook[M]arks' })
--- )
+-- }
 
--- )
+-- }
 
--- Trouble (
+-- Trouble {
 require("trouble").setup{}
 
 bind("n", "<localleader>xx", "<cmd>Trouble<cr>", { desc = 'Trouble Diagnostics' })
@@ -336,9 +335,9 @@ bind("n", "<localleader>xd", "<cmd>Trouble document_diagnostics<cr>", { desc = '
 bind("n", "<localleader>xl", "<cmd>Trouble loclist<cr>", { desc = 'Trouble Location List' })
 bind("n", "<localleader>xq", "<cmd>Trouble quickfix<cr>", { desc = 'Trouble Quick Fix' })
 bind("n", "gR", "<cmd>Trouble lsp_references<cr>", { desc = 'Trouble LSP References' })
--- -- )
+-- }
 
--- todo-comments (
+-- todo-comments {
 require("todo-comments").setup{
   colors = {
     error = { "#DC2626" },
@@ -350,5 +349,5 @@ require("todo-comments").setup{
 }
 
 bind("n", "<localleader>td", "<cmd>TodoTrouble<cr>", { silent = true })
--- )
+-- }
 -- }
