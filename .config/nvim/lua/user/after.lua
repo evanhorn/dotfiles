@@ -1,5 +1,7 @@
 -- vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
+local bind = vim.keymap.set
+
 -- Treesitter {
 require("nvim-treesitter.configs").setup{
   ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -83,6 +85,61 @@ require("treesitter-context").setup{
 
 -- }
 
+-- DAP {
+local dap = require('dap')
+dap.configurations.lua = {
+  {
+    type = 'nlua',
+    request = 'attach',
+    name = 'Attach to running Neovim instance',
+  }
+}
+
+dap.adapters.nlua = function(callback, config)
+  callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+end
+
+-- Color DAP signs {
+local DapBreakpoint = 'DiagnosticSignError'
+local DapLogPoint = 'DiagnosticSignHint'
+local DapStopped = 'DiagnosticSignOK'
+
+-- local
+vim.fn.sign_define('DapBreakpoint', { text = ' ', texthl = DapBreakpoint, numhl = DapBreakpoint })
+vim.fn.sign_define('DapBreakpointCondition', { text = 'ﳁ ', texthl = DapBreakpoint, numhl = DapBreakpoint })
+vim.fn.sign_define('DapBreakpointRejected', { text = ' ', texthl = DapBreakpoint, numhl = DapBreakpoint })
+vim.fn.sign_define('DapLogPoint', { text = ' ', texthl = DapLogPoint, numhl = DapLogPoint })
+-- vim.fn.sign_define('DapStopped', { text = ' ', texthl = DapStopped, numhl = DapStopped })
+vim.fn.sign_define('DapStopped', { text = '▶️ ', texthl = DapStopped, numhl = DapStopped })
+-- }
+
+-- DAP keymaps {
+bind('n', '<space>b', dap.toggle_breakpoint, { noremap = true, desc = "DAP: Toggle Breakpoint" })
+bind('n', '<space>c', dap.continue, { noremap = true, desc = "DAP: Continue" })
+bind('n', '<space>o', dap.step_over, { noremap = true, desc = "DAP: Step Over" })
+bind('n', '<space>i', dap.step_into, { noremap = true, desc = "DAP: Step Into" })
+bind('n', '<space>s', dap.step_into, { noremap = true, desc = "DAP: Step Into" })
+-- bind('n', '<F12>', dap.ui.widgets.hover, { noremap = true, desc = "DAP: Hover" })
+-- bind('n', '<F5>', require"osv".launch({port = 8086}), { noremap = true, desc = "DAP: Run" })
+bind('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true, desc = "DAP: Hover"  })
+bind('n', '<F5>', [[:lua require"osv".launch({port = 8086})<CR>]], { noremap = true, desc = "DAP: Run"  })
+-- }
+
+-- DAP UI {
+local dapui = require("dapui")
+dap.listeners.after.event_initialized["dapui_config"]=function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"]=function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"]=function()
+  dapui.close()
+end
+-- }
+
+-- }
+
 -- LSP {
 
 --Enable (broadcasting) snippet capability for completion
@@ -123,9 +180,9 @@ local servers = {
   },
   lua_ls = {
     Lua = {
-      diagnostics = {
-        globals = { "vim" }
-      }
+      workspace = {
+        checkThirdParty = false,
+      },
     },
   },
   ltex = {},
@@ -280,8 +337,6 @@ telescope.setup{
     },
   },
 }
-
-local bind = vim.keymap.set
 
 bind("n", "-", telescope.extensions.file_browser.file_browser, { silent = true })
 bind('n', '<leader>gf', builtin.git_files, { desc = '[G]it [F]iles' })
