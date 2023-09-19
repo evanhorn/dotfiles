@@ -94,6 +94,37 @@ require("lazy").setup({
     },
 -- }
 
+-- Debug Adapter {
+  {
+    'rcarriga/nvim-dap-ui',
+    dependencies = {
+      'mfussenegger/nvim-dap',
+      {
+        'folke/neodev.nvim',
+        config = function()
+          require("neodev").setup{
+            library = {
+              plugins = { "nvim-dap-ui" },
+              types = true,
+            }
+          }
+        end,
+      },
+    },
+    config = function()
+      require("dapui").setup()
+    end,
+  },
+  'jbyuki/one-small-step-for-vimkind',
+  {
+    'mfussenegger/nvim-dap-python',
+    config = function()
+      require("dap-python").setup()
+      require("dap-python").test_runner = 'pytest'
+    end,
+  },
+-- }
+
 -- Files and fuzzy search {
   {
     'nvim-telescope/telescope.nvim',
