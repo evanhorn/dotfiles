@@ -109,8 +109,7 @@ vim.fn.sign_define('DapBreakpoint', { text = ' ', texthl = DapBreakpoint, num
 vim.fn.sign_define('DapBreakpointCondition', { text = 'ﳁ ', texthl = DapBreakpoint, numhl = DapBreakpoint })
 vim.fn.sign_define('DapBreakpointRejected', { text = ' ', texthl = DapBreakpoint, numhl = DapBreakpoint })
 vim.fn.sign_define('DapLogPoint', { text = ' ', texthl = DapLogPoint, numhl = DapLogPoint })
--- vim.fn.sign_define('DapStopped', { text = ' ', texthl = DapStopped, numhl = DapStopped })
-vim.fn.sign_define('DapStopped', { text = '▶️ ', texthl = DapStopped, numhl = DapStopped })
+vim.fn.sign_define('DapStopped', { text = ' ', texthl = DapStopped, numhl = DapStopped })
 -- }
 
 -- DAP keymaps {
@@ -123,6 +122,10 @@ bind('n', '<space>s', dap.step_into, { noremap = true, desc = "DAP: Step Into" }
 -- bind('n', '<F5>', require"osv".launch({port = 8086}), { noremap = true, desc = "DAP: Run" })
 bind('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true, desc = "DAP: Hover"  })
 bind('n', '<F5>', [[:lua require"osv".launch({port = 8086})<CR>]], { noremap = true, desc = "DAP: Run"  })
+
+bind('n', '<leader>dn', require('dap-python').test_method, { noremap = true, desc = "DAP Python: Test Method"  })
+bind('n', '<leader>df', require('dap-python').test_class, { noremap = true, desc = "DAP Python: Test Class"  })
+bind('n', '<leader>ds', require('dap-python').debug_selection, { noremap = true, desc = "DAP Python: Debug Selection"  })
 -- }
 
 -- DAP UI {
