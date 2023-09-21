@@ -112,17 +112,12 @@ local servers = {
   fortls = {},
   html = {},
   jsonls = {},
-  jedi_language_server = {},
-  -- pyright = {},
   pylsp = {
     pylsp = {
       configurationSources = { "flake8", "mypy" },
       plugins = {
         flake8 = { enabled = true },
         pylsp_mypy = { enabled = true, live_mode = true },
-        pycodestyle = { enabled = false },
-        pyflakes = { enabled = false },
-        mccabe = { enabled = false },
       },
     },
   },
@@ -196,9 +191,7 @@ end
 local lspconfig = require('lspconfig')
 local coq = require('coq')
 for server, settings in pairs(servers) do
-  lspconfig[server].setup{coq.lsp_ensure_capabilities{
-    capabilities = capabilities,
-  },
+  lspconfig[server].setup{
   on_attach = on_attach,
   settings = settings,
 }
