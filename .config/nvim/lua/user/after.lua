@@ -145,13 +145,6 @@ end
 
 -- LSP {
 
---Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = { 'documentation', 'detail', 'additionalTextEdits' },
-}
-
 local servers = {
   arduino_language_server = {
     cmd = {
@@ -174,9 +167,9 @@ local servers = {
   jsonls = {},
   pylsp = {
     pylsp = {
-      configurationSources = { "flake8", "mypy" },
+      configurationSources = { "mypy" },
       plugins = {
-        flake8 = { enabled = true },
+        black = { enabled = false },
         pylsp_mypy = { enabled = true, live_mode = true },
       },
     },
