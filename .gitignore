@@ -99,7 +99,7 @@ ENV/
 
 # General
 tags*
-.gitignore
+# .gitignore
 .vim-bookmarks
 *~
 *.bak
