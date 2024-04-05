@@ -1,19 +1,6 @@
 [user]
   name = Eric Van Horn
   email = eric.vanhorn@pm.me
-  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwfoopyDBSJ5VmziUWkcHOnmim/SgMalVGNpfC7jzsf
-
-[credential "https://dev.azure.com"]
-  useHttpPath = true
-
-[gpg]
-  format = ssh
-
-[gpg "ssh"]
-  program = "/opt/1Password/op-ssh-sign"
-
-[commit]
-  gpgsign = true
 
 [alias]
   # View abbreviated SHA, description, and history graph of the latest 20 commits
