@@ -99,6 +99,7 @@ require("lazy").setup({
     'rcarriga/nvim-dap-ui',
     dependencies = {
       'mfussenegger/nvim-dap',
+      'nvim-neotest/nvim-nio',
       {
         'folke/neodev.nvim',
         config = function()
