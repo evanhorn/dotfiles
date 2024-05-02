@@ -99,6 +99,9 @@ dap.adapters.nlua = function(callback, config)
   callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
 end
 
+local dap_python = require('dap-python')
+dap_python.setup('~/.virtualenvs/debugpy/bin/python')
+
 -- Color DAP signs {
 local DapBreakpoint = 'DiagnosticSignError'
 local DapLogPoint = 'DiagnosticSignHint'
@@ -123,10 +126,14 @@ bind('n', '<space>s', dap.step_into, { noremap = true, desc = "DAP: Step Into" }
 bind('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true, desc = "DAP: Hover"  })
 bind('n', '<F5>', [[:lua require"osv".launch({port = 8086})<CR>]], { noremap = true, desc = "DAP: Run"  })
 
-bind('n', '<leader>dn', require('dap-python').test_method, { noremap = true, desc = "DAP Python: Test Method"  })
-bind('n', '<leader>df', require('dap-python').test_class, { noremap = true, desc = "DAP Python: Test Class"  })
-bind('n', '<leader>ds', require('dap-python').debug_selection, { noremap = true, desc = "DAP Python: Debug Selection"  })
+bind('n', '<leader>dn', dap_python.test_method, { noremap = true, desc = "DAP Python: Test Method"  })
+bind('n', '<leader>df', dap_python.test_class, { noremap = true, desc = "DAP Python: Test Class"  })
+bind('n', '<leader>ds', dap_python.debug_selection, { noremap = true, desc = "DAP Python: Debug Selection"  })
 -- }
+
+require("neodev").setup({
+  library = { plugins = { "nvim-dap-ui" }, types = true }
+})
 
 -- DAP UI {
 local dapui = require("dapui")
